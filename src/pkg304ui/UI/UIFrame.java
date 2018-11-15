@@ -5,7 +5,9 @@
  */
 package pkg304ui.UI;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import pkg304ui.UIUpdater;
 
 /**
  *
@@ -31,13 +33,16 @@ public class UIFrame extends javax.swing.JFrame {
 
         LeftPanel = new javax.swing.JPanel();
         PickUserButton = new javax.swing.JButton();
+        currentUserStaticLabel = new javax.swing.JLabel();
+        currentUserDynamicLabel = new javax.swing.JLabel();
+        matchesDropdown = new javax.swing.JComboBox<>();
+        matchesStaticLabel = new javax.swing.JLabel();
         RightPanel = new javax.swing.JPanel();
         RightScroll = new javax.swing.JScrollPane();
         RightText = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("UIFrame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1024, 768));
         setResizable(false);
 
         LeftPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -50,21 +55,44 @@ public class UIFrame extends javax.swing.JFrame {
             }
         });
 
+        currentUserStaticLabel.setText("Current User: ");
+
+        matchesStaticLabel.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        matchesStaticLabel.setText("Matches");
+
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
         LeftPanelLayout.setHorizontalGroup(
             LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LeftPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(PickUserButton)
-                .addContainerGap(394, Short.MAX_VALUE))
+                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(LeftPanelLayout.createSequentialGroup()
+                        .addComponent(PickUserButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(currentUserStaticLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(currentUserDynamicLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE))
+                    .addGroup(LeftPanelLayout.createSequentialGroup()
+                        .addComponent(matchesStaticLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(matchesDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         LeftPanelLayout.setVerticalGroup(
             LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LeftPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(PickUserButton)
-                .addContainerGap(704, Short.MAX_VALUE))
+                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(PickUserButton)
+                    .addComponent(currentUserStaticLabel)
+                    .addComponent(currentUserDynamicLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(matchesStaticLabel)
+                    .addComponent(matchesDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(674, Short.MAX_VALUE))
         );
 
         RightPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -113,9 +141,9 @@ public class UIFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void PickUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PickUserButtonActionPerformed
-        // TODO add your handling code here:
-        String userID = JOptionPane.showInputDialog("Please enter a uUer ID");
-        RightText.setText("You are now: "+userID);
+        String userID = JOptionPane.showInputDialog("Please enter a User ID");
+        ArrayList matches = new ArrayList(); // get result from midlayer
+        UIUpdater.login(userID, matches);
     }//GEN-LAST:event_PickUserButtonActionPerformed
 
     /**
@@ -160,5 +188,9 @@ public class UIFrame extends javax.swing.JFrame {
     private javax.swing.JPanel RightPanel;
     private javax.swing.JScrollPane RightScroll;
     public javax.swing.JTextPane RightText;
+    public javax.swing.JLabel currentUserDynamicLabel;
+    private javax.swing.JLabel currentUserStaticLabel;
+    public javax.swing.JComboBox<String> matchesDropdown;
+    private javax.swing.JLabel matchesStaticLabel;
     // End of variables declaration//GEN-END:variables
 }
