@@ -3,7 +3,7 @@ package pkg304data;
 public class Personality {
 	private String type;
 	
-	Personality(String type) {
+	public Personality(String type) {
 		this.type = type;
 	}
 	

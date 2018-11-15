@@ -9,11 +9,11 @@ public abstract class GenericModel<T> {
 		this.con = con;
 	}
 	
-	public List<T> getAll() throws SQLException {
-		return null;
-	}
+	public abstract List<T> getAll() throws SQLException;
 	
-	public int execUpdateSQL(String cmd) throws SQLException {
+	public abstract List<T> parseResultSet(ResultSet rs) throws SQLException;
+	
+	protected int execUpdateSQL(String cmd) throws SQLException {
 		Statement stmt = this.con.createStatement();
 		int rowCount = stmt.executeUpdate(cmd);
 		this.con.commit();
@@ -24,7 +24,7 @@ public abstract class GenericModel<T> {
 		return rowCount;
 	}
 	
-	public int execUpdateSQL(String cmd, List<Integer> types, List<Object> values) throws SQLException {
+	protected int execUpdateSQL(String cmd, List<Integer> types, List<Object> values) throws SQLException {
 		PreparedStatement ps = this.con.prepareStatement(cmd);
 		setupPS(ps, types, values);
 		int rowCount = ps.executeUpdate();
@@ -36,14 +36,14 @@ public abstract class GenericModel<T> {
 		return rowCount;
 	}
 	
-	public ResultSet execQuerySQL(String cmd) throws SQLException {
+	protected ResultSet execQuerySQL(String cmd) throws SQLException {
 		Statement stmt = this.con.createStatement();
 		ResultSet rs = stmt.executeQuery(cmd);
 		stmt.close();
 		return rs;
 	}
 	
-	public ResultSet execQuerySQL(String cmd, List<Integer> types, List<Object> values) throws SQLException {
+	protected ResultSet execQuerySQL(String cmd, List<Integer> types, List<Object> values) throws SQLException {
 		PreparedStatement ps = this.con.prepareStatement(cmd);
 		setupPS(ps, types, values);
 		ResultSet rs = ps.executeQuery();
@@ -51,7 +51,7 @@ public abstract class GenericModel<T> {
 		return rs;
 	}
 	
-	public void setupPS(PreparedStatement ps, List<Integer> types, List<Object> values) throws SQLException {
+	protected void setupPS(PreparedStatement ps, List<Integer> types, List<Object> values) throws SQLException {
 		if (types.size() != values.size()) {
 			throw new SQLException("error: length mismatch between types and values array");
 		}
