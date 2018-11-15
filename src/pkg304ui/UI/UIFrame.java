@@ -142,7 +142,7 @@ public class UIFrame extends javax.swing.JFrame {
 
     private void PickUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PickUserButtonActionPerformed
         String userID = JOptionPane.showInputDialog("Please enter a User ID");
-        ArrayList matches = new ArrayList(); // get result from midlayer
+        ArrayList matches = new ArrayList(); // TODO - get result from midlayer
         UIUpdater.login(userID, matches);
     }//GEN-LAST:event_PickUserButtonActionPerformed
 
