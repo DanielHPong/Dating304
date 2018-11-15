@@ -37,6 +37,7 @@ public class UIFrame extends javax.swing.JFrame {
         currentUserDynamicLabel = new javax.swing.JLabel();
         matchesDropdown = new javax.swing.JComboBox<>();
         matchesStaticLabel = new javax.swing.JLabel();
+        errorDynamicLabel = new javax.swing.JLabel();
         RightPanel = new javax.swing.JPanel();
         RightScroll = new javax.swing.JScrollPane();
         RightText = new javax.swing.JTextPane();
@@ -60,6 +61,9 @@ public class UIFrame extends javax.swing.JFrame {
         matchesStaticLabel.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         matchesStaticLabel.setText("Matches");
 
+        errorDynamicLabel.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        errorDynamicLabel.setForeground(new java.awt.Color(222, 0, 0));
+
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
         LeftPanelLayout.setHorizontalGroup(
@@ -67,6 +71,7 @@ public class UIFrame extends javax.swing.JFrame {
             .addGroup(LeftPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(errorDynamicLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(LeftPanelLayout.createSequentialGroup()
                         .addComponent(PickUserButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -92,7 +97,9 @@ public class UIFrame extends javax.swing.JFrame {
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(matchesStaticLabel)
                     .addComponent(matchesDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(674, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 662, Short.MAX_VALUE)
+                .addComponent(errorDynamicLabel)
+                .addContainerGap())
         );
 
         RightPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -144,6 +151,7 @@ public class UIFrame extends javax.swing.JFrame {
         String userID = JOptionPane.showInputDialog("Please enter a User ID");
         ArrayList matches = new ArrayList(); // TODO - get result from midlayer
         UIUpdater.login(userID, matches);
+        UIUpdater.error("test");
     }//GEN-LAST:event_PickUserButtonActionPerformed
 
     /**
@@ -190,6 +198,7 @@ public class UIFrame extends javax.swing.JFrame {
     public javax.swing.JTextPane RightText;
     public javax.swing.JLabel currentUserDynamicLabel;
     private javax.swing.JLabel currentUserStaticLabel;
+    public javax.swing.JLabel errorDynamicLabel;
     public javax.swing.JComboBox<String> matchesDropdown;
     private javax.swing.JLabel matchesStaticLabel;
     // End of variables declaration//GEN-END:variables

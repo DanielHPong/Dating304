@@ -13,9 +13,13 @@ import java.util.ArrayList;
  */
 public class UIUpdater {
     
+    public static void error(String error) {
+        UIMain.UI.errorDynamicLabel.setText("Error: "+error);
+    }
+    
     public static boolean login(String user, ArrayList matches) {
         UIMain.UI.currentUserDynamicLabel.setText(user);
-        UIMain.UI.matchesDropdown.setSelectedIndex(0);
+        // UIMain.UI.matchesDropdown.setSelectedIndex(0);
         UIMain.UI.matchesDropdown.removeAllItems();
         for (Object match : matches) {
             UIMain.UI.matchesDropdown.addItem((String)match);
