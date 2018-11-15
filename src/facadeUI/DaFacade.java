@@ -2,6 +2,7 @@ package facadeUI;
 
 public interface DaFacade {
 	public void login(String id);
+	public void logout();
 	public void getMatch();
 	public void getMessage(String id);
 	public void sendMessage(String id, String msg);
