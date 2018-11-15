@@ -38,17 +38,13 @@ public abstract class GenericModel<T> {
 	
 	protected ResultSet execQuerySQL(String cmd) throws SQLException {
 		Statement stmt = this.con.createStatement();
-		ResultSet rs = stmt.executeQuery(cmd);
-		stmt.close();
-		return rs;
+		return stmt.executeQuery(cmd);
 	}
 	
 	protected ResultSet execQuerySQL(String cmd, List<Integer> types, List<Object> values) throws SQLException {
 		PreparedStatement ps = this.con.prepareStatement(cmd);
 		setupPS(ps, types, values);
-		ResultSet rs = ps.executeQuery();
-		ps.close();
-		return rs;
+		return ps.executeQuery();
 	}
 	
 	protected void setupPS(PreparedStatement ps, List<Integer> types, List<Object> values) throws SQLException {
