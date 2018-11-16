@@ -1,12 +1,14 @@
 package facadeUI;
-import facadeUI.LogInManager;
 
 public class ViFacade implements DaFacade {
 	private LogInManager LogInMan;
+	private UserManager UserMan;
+	private Viewer viewer;
 	
 	ViFacade() {
-		// TODO
 		LogInMan = LogInManager.getInstance();
+		UserMan = UserManager.getInstance();
+		viewer = Viewer.getInstance();
 	}
 
 	@Override
@@ -21,44 +23,37 @@ public class ViFacade implements DaFacade {
 
 	@Override
 	public void getMatch() {
-		// TODO Auto-generated method stub
-
+		UserMan.getMatch();
 	}
 
 	@Override
 	public void getMessage(String id) {
-		// TODO Auto-generated method stub
-
+		UserMan.getMessage(id);
 	}
 
 	@Override
 	public void sendMessage(String id, String msg) {
-		// TODO Auto-generated method stub
-
+		UserMan.sendMessage(id, msg);
 	}
 
 	@Override
 	public void buyPrem(String type) {
-		// TODO Auto-generated method stub
-
+		UserMan.buyPrem(type);
 	}
 
 	@Override
-	public void cancelPrem() {
-		// TODO Auto-generated method stub
-
+	public void cancelPrem(String type) {
+		UserMan.cancelPrem(type);
 	}
 
 	@Override
 	public void uploadImage(String url) {
-		// TODO Auto-generated method stub
-
+		UserMan.uploadImage(url);
 	}
 
 	@Override
 	public void deleteImage(String url) {
-		// TODO Auto-generated method stub
-
+		UserMan.deleteImage(url);
 	}
 
 	@Override
@@ -73,20 +68,17 @@ public class ViFacade implements DaFacade {
 
 	@Override
 	public void viewPaymentInfo() {
-		// TODO Auto-generated method stub
-
+		UserMan.viewPaymentInfo();
 	}
 
 	@Override
 	public void showUserStats() {
-		// TODO Auto-generated method stub
-
+		viewer.showUserStats();
 	}
 
 	@Override
 	public void showBuyRecords() {
-		// TODO Auto-generated method stub
-
+		viewer.showBuyRecords();
 	}
 
 }
