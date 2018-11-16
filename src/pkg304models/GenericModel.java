@@ -10,9 +10,7 @@ public abstract class GenericModel<T> {
 	}
 	
 	public abstract List<T> getAll() throws SQLException;
-	
-	public abstract List<T> parseResultSet(ResultSet rs) throws SQLException;
-	
+		
 	protected int execUpdateSQL(String cmd) throws SQLException {
 		Statement stmt = this.con.createStatement();
 		int rowCount = stmt.executeUpdate(cmd);
@@ -51,6 +49,8 @@ public abstract class GenericModel<T> {
 		if (types.size() != values.size()) {
 			throw new SQLException("error: length mismatch between types and values array");
 		}
+		System.out.println(types.toString());
+		System.out.println(values.toString());
 		for (int i=0; i<types.size(); i++) {
 			int t = types.get(i);
 			Object v = values.get(i);
@@ -68,12 +68,14 @@ public abstract class GenericModel<T> {
 				} else {
 					ps.setString(i+1, (String) v);
 				}
+				break;
 			case Types.TIME:
 				if (v == null) {
 					ps.setNull(i+1, Types.TIME);
 				} else {
 					// TODO: Initialize date as right now and update ps accordingly
 				}
+				break;
 			default:
 				throw new SQLException("error: unknown type - " + t + " passed to setupPS");
 			}

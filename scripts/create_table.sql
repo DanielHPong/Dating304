@@ -12,6 +12,16 @@ drop table benefits cascade constraints;
 drop table premium_to_benefit cascade constraints;
 
 
+create sequence incr_pId
+	start with 1
+	increment by 1
+	cache 10;
+
+create sequence incr_customerId
+	start with 1
+	increment by 1
+	cache 10;
+	
 create table personality
     (pId integer,
     type char (50),
@@ -22,7 +32,7 @@ create table customer
     email char(50) not null,
     name char(50) not null,
     isActive char(1) not null,
-    personalityId integer,
+    personalityId integer not null,
     primary key (customerId),
     unique(email),
     foreign key (personalityId) references personality);
@@ -101,4 +111,20 @@ create table premium_to_benefit
     foreign key (pName) references premium_package on delete cascade,
     foreign key (bName) references benefits on delete cascade);
 
--- TODO: INSERT DATA HERE
+
+insert into personality (pId, type) values
+	(incr_pId.nextval, 'antisocial');
+insert into personality (pId, type) values
+	(incr_pId.nextval, 'social');
+insert into personality (pId, type) values
+	(incr_pId.nextval, 'damnnnnnnn');
+
+insert into customer (customerId, email, name, isActive, personalityId) values
+	(incr_customerId.nextval, 'yooup@naver.com', 'Jason Yoo', 'T', 1);
+insert into customer (customerId, email, name, isActive, personalityId) values
+	(incr_customerId.nextval, 'liuup@naver.com', 'Ellen Liu', 'T', 2);
+insert into customer (customerId, email, name, isActive, personalityId) values
+	(incr_customerId.nextval, 'kimup@naver.com', 'David Kim', 'T', 3);
+insert into customer (customerId, email, name, isActive, personalityId) values
+	(incr_customerId.nextval, 'leup@naver.com', 'Daniel Le', 'T', 3);
+	
