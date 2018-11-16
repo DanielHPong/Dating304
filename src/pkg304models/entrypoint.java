@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import pkg304data.Personality;
+import pkg304models.models.CustomerModel;
 import pkg304models.models.PersonalityModel;
 
 public class entrypoint {
@@ -12,18 +13,12 @@ public class entrypoint {
 		// TODO Auto-generated method stub
 		try {
 			ModelManager mManager = ModelManager.getInstance();
-			PersonalityModel pModel = (PersonalityModel) mManager.getModel(Table.PERSONALITY);
-			List<Personality> result = pModel.getAll();
-			
-			System.out.println("Done!");
-			System.out.println("Length of result is: " + result.size());
-			System.out.println("First element is: " + result.get(0).getType());
-			
-			List<Personality> rtwo = pModel.getAll();
-			
-			System.out.println("Done2!");
-			System.out.println("Length of rtwo is: " + rtwo.size());
-			System.out.println("First element rtwo is: " + rtwo.get(0).getType());
+
+			CustomerModel cModel = (CustomerModel) mManager.getModel(Table.CUSTOMER);
+			// System.out.println("creation code: " + cModel.createCustomer("edk@gmail.com", "Ed Knorr", 3));
+			// System.out.println("id from mail: " + cModel.getIdFromEmail("edk@gmail.com"));
+			// System.out.println("deactivated: " + cModel.deactivateCustomer("edk@gmail.com"));
+			System.out.println("creation code: " + cModel.getMatchedCustomers(10));
 			
 			mManager.close();
 		} catch (SQLException e) {

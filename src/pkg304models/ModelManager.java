@@ -2,13 +2,15 @@ package pkg304models;
 
 import java.sql.*;
 
+import pkg304data.Customer;
 import pkg304data.Personality;
+import pkg304models.models.CustomerModel;
 import pkg304models.models.PersonalityModel;
 
 public class ModelManager {
 	private static final String connectURL = "jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1522:ug";
-	private static final String username = "ora_*****";
-	private static final String password = "a********";
+	private static String username = "ora_<cs id>";
+	private static String password = "a<student id>";
 	private static ModelManager manager = null;
 	private Connection con;
 	
@@ -47,8 +49,10 @@ public class ModelManager {
 	
 	public void connectDB() throws SQLException {
 		try {
+			System.out.println("About to CONNECT");
 			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
 			this.con = DriverManager.getConnection(connectURL, username, password);
+			System.out.println("DONE");
 			this.con.setAutoCommit(false);
 		} catch (SQLException e) {
 			System.out.println("error: failed to connect to the database with msg - " + e.getMessage());
@@ -60,6 +64,8 @@ public class ModelManager {
 	public GenericModel getModel(Table table) throws SQLException {
 		this.open();
 		switch(table) {
+		case CUSTOMER:
+			return (GenericModel<Customer>) new CustomerModel(this.con);
 		case PERSONALITY:
 			return (GenericModel<Personality>) new PersonalityModel(this.con);
 		default:
