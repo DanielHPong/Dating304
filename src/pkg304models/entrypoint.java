@@ -15,8 +15,10 @@ public class entrypoint {
 			ModelManager mManager = ModelManager.getInstance();
 
 			CustomerModel cModel = (CustomerModel) mManager.getModel(Table.CUSTOMER);
-			System.out.println("creation code: " + cModel.createCustomer("Ed Knorr", "edk@gmail.com", 3));
-			System.out.println("id from mail: " + cModel.getIdFromEmail("edk@gmail.com"));
+			// System.out.println("creation code: " + cModel.createCustomer("edk@gmail.com", "Ed Knorr", 3));
+			// System.out.println("id from mail: " + cModel.getIdFromEmail("edk@gmail.com"));
+			// System.out.println("deactivated: " + cModel.deactivateCustomer("edk@gmail.com"));
+			System.out.println("creation code: " + cModel.getMatchedCustomers(10));
 			
 			mManager.close();
 		} catch (SQLException e) {

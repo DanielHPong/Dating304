@@ -66,6 +66,7 @@ public abstract class GenericModel<T> {
 				if (v == null) {
 					ps.setNull(i+1, Types.CHAR);
 				} else {
+					// TODO: This requires cast(? as char(XXX))
 					ps.setString(i+1, (String) v);
 				}
 				break;

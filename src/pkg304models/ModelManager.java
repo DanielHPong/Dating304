@@ -9,8 +9,8 @@ import pkg304models.models.PersonalityModel;
 
 public class ModelManager {
 	private static final String connectURL = "jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1522:ug";
-	private static String username = "ora_<CS ID>";
-	private static String password = "a<STUDENT ID>";
+	private static String username = "ora_<cs id>";
+	private static String password = "a<student id>";
 	private static ModelManager manager = null;
 	private Connection con;
 	
