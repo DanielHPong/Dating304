@@ -5,13 +5,15 @@ public class Customer {
 	private int personalityId;
 	private String email;
 	private String name;
+	private String gender;
 	private boolean isActive;
 	
-	public Customer(int cid, String email, String name, boolean isActive, int pid) {
+	public Customer(int cid, String email, String name, String gender, boolean isActive, int pid) {
 		this.customerId = cid;
 		this.personalityId = pid;
 		this.email = email;
 		this.name = name;
+		this.gender = gender;
 		this.isActive = isActive;
 	}
 
@@ -29,6 +31,10 @@ public class Customer {
 
 	public String getName() {
 		return name;
+	}
+	
+	public String getGender() {
+		return gender;
 	}
 
 	public boolean isActive() {

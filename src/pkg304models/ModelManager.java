@@ -2,15 +2,13 @@ package pkg304models;
 
 import java.sql.*;
 
-import pkg304data.Customer;
-import pkg304data.Personality;
-import pkg304models.models.CustomerModel;
-import pkg304models.models.PersonalityModel;
+import pkg304data.*;
+import pkg304models.models.*;
 
 public class ModelManager {
 	private static final String connectURL = "jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1522:ug";
-	private static String username = "ora_<cs id>";
-	private static String password = "a<student id>";
+	private static String username = "ora_<csid>";
+	private static String password = "a<studentid>";
 	private static ModelManager manager = null;
 	private Connection con;
 	
@@ -66,6 +64,8 @@ public class ModelManager {
 		switch(table) {
 		case CUSTOMER:
 			return (GenericModel<Customer>) new CustomerModel(this.con);
+		case IMAGE_LOG:
+			return (GenericModel<Image>) new ImageModel(this.con);
 		case PERSONALITY:
 			return (GenericModel<Personality>) new PersonalityModel(this.con);
 		default:
