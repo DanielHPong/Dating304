@@ -164,6 +164,9 @@ public class UIFrame extends javax.swing.JFrame {
 
     private void PickUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PickUserButtonActionPerformed
         String userEmail = JOptionPane.showInputDialog("Please enter a user email");
+        if (userEmail == null) {
+            return;
+        }
         LogInManager logInManager = LogInManager.getInstance();
         logInManager.login(userEmail);
         if (logInManager.isLoggedOn()) {
