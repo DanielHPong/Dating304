@@ -5,7 +5,7 @@
  */
 package pkg304ui;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -17,7 +17,7 @@ public class UIUpdater {
         UIMain.UI.errorDynamicLabel.setText("Error: "+error);
     }
     
-    public static boolean login(String user, ArrayList matches) {
+    public static boolean login(String user, List matches) {
         UIMain.UI.currentUserDynamicLabel.setText(user);
         // UIMain.UI.matchesDropdown.setSelectedIndex(0);
         UIMain.UI.matchesDropdown.removeAllItems();
@@ -25,6 +25,10 @@ public class UIUpdater {
             UIMain.UI.matchesDropdown.addItem((String)match);
         }
         return true;
+    }
+    
+    public static void setText(String text) {
+        UIMain.setText(text);
     }
     
 }
