@@ -10,6 +10,9 @@ drop table premium_package cascade constraints;
 drop table purchase cascade constraints;
 drop table benefits cascade constraints;
 drop table premium_to_benefit cascade constraints;
+drop sequence ora_d4m0b.incr_pId;
+drop sequence ora_d4m0b.incr_customerId;
+
 
 
 create sequence incr_pId
@@ -31,6 +34,7 @@ create table customer
     (customerId integer not null,
     email char(50) not null,
     name char(50) not null,
+    gender char(10) not null,
     isActive char(1) not null,
     personalityId integer not null,
     primary key (customerId),
@@ -42,7 +46,6 @@ create table match
     customer2Id integer,
     c1Active char(1) not null,
     c2Active char(1) not null,
-    matchTime date,
     primary key (customer1Id, customer2Id),
     foreign key (customer1Id) references customer,
     foreign key (customer2Id) references customer);
@@ -112,19 +115,72 @@ create table premium_to_benefit
     foreign key (bName) references benefits on delete cascade);
 
 
+    
 insert into personality (pId, type) values
-	(incr_pId.nextval, 'antisocial');
+	(incr_pId.nextval, 'Introverted');
 insert into personality (pId, type) values
-	(incr_pId.nextval, 'social');
+	(incr_pId.nextval, 'Amicable');
 insert into personality (pId, type) values
-	(incr_pId.nextval, 'damnnnnnnn');
+	(incr_pId.nextval, 'Romantic');
+insert into personality (pId, type) values
+	(incr_pId.nextval, 'Party Animal');
 
-insert into customer (customerId, email, name, isActive, personalityId) values
-	(incr_customerId.nextval, 'yooup@naver.com', 'Jason Yoo', 'T', 1);
-insert into customer (customerId, email, name, isActive, personalityId) values
-	(incr_customerId.nextval, 'liuup@naver.com', 'Ellen Liu', 'T', 2);
-insert into customer (customerId, email, name, isActive, personalityId) values
-	(incr_customerId.nextval, 'kimup@naver.com', 'David Kim', 'T', 3);
-insert into customer (customerId, email, name, isActive, personalityId) values
-	(incr_customerId.nextval, 'leup@naver.com', 'Daniel Le', 'T', 3);
+insert into personality_match (p1Id, p2Id, rank) values
+	(2, 3, 1);
+insert into personality_match (p1Id, p2Id, rank) values
+	(2, 4, 2);
+insert into personality_match (p1Id, p2Id, rank) values
+	(2, 5, 3);
+insert into personality_match (p1Id, p2Id, rank) values
+	(3, 2, 1);
+insert into personality_match (p1Id, p2Id, rank) values
+	(3, 4, 3);
+insert into personality_match (p1Id, p2Id, rank) values
+	(3, 5, 2);
+insert into personality_match (p1Id, p2Id, rank) values
+	(4, 2, 2);
+insert into personality_match (p1Id, p2Id, rank) values
+	(4, 3, 3);
+insert into personality_match (p1Id, p2Id, rank) values
+	(4, 5, 1);
+insert into personality_match (p1Id, p2Id, rank) values
+	(5, 2, 3);
+insert into personality_match (p1Id, p2Id, rank) values
+	(5, 3, 2);
+insert into personality_match (p1Id, p2Id, rank) values
+	(5, 4, 1);
+
+insert into customer (customerId, email, name, gender, isActive, personalityId) values
+	(incr_customerId.nextval, 'yoo@naver.com', 'Jason Yoo', 'M', '1', 2);
+insert into customer (customerId, email, name, gender, isActive, personalityId) values
+	(incr_customerId.nextval, 'liu@naver.com', 'Ellen Liu', 'F', '1', 2);
+insert into customer (customerId, email, name, gender, isActive, personalityId) values
+	(incr_customerId.nextval, 'kim@naver.com', 'David Kim', 'M', '1', 3);
+insert into customer (customerId, email, name, gender, isActive, personalityId) values
+	(incr_customerId.nextval, 'le@naver.com', 'Daniel Le', 'M', '1', 4);
+insert into customer (customerId, email, name, gender, isActive, personalityId) values
+	(incr_customerId.nextval, 'knorr@naver.com', 'Ed Knorr', 'M', '1', 5);
+insert into customer (customerId, email, name, gender, isActive, personalityId) values
+	(incr_customerId.nextval, 'watson@naver.com', 'Emma Watson', 'F', '1', 3);
+
+insert into match (customer1Id, customer2Id, c1Active, c2Active) values
+	(2, 3, '1', '1');
+insert into match (customer1Id, customer2Id, c1Active, c2Active) values
+	(2, 4, '1', '1');
+insert into match (customer1Id, customer2Id, c1Active, c2Active) values
+	(4, 5, '1', '0');
+insert into match (customer1Id, customer2Id, c1Active, c2Active) values
+	(5, 7, '1', '1');
 	
+insert into image_log (customerId, url) values
+	(2, 'google.com/img1');
+insert into image_log (customerId, url) values
+	(2, 'google.com/img2');
+insert into image_log (customerId, url) values
+	(3, 'google.com/img3');
+insert into image_log (customerId, url) values
+	(3, 'google.com/img4');
+insert into image_log (customerId, url) values
+	(4, 'google.com/img5');
+insert into image_log (customerId, url) values
+	(5, 'google.com/img6');

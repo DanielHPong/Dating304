@@ -49,8 +49,6 @@ public abstract class GenericModel<T> {
 		if (types.size() != values.size()) {
 			throw new SQLException("error: length mismatch between types and values array");
 		}
-		System.out.println(types.toString());
-		System.out.println(values.toString());
 		for (int i=0; i<types.size(); i++) {
 			int t = types.get(i);
 			Object v = values.get(i);
