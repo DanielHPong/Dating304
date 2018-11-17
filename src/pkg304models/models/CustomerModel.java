@@ -90,14 +90,14 @@ public class CustomerModel extends GenericModel<Customer> {
 		);
 	}
 	
-	// Set isActive field of customer with a specific email address
-	public int deactivateCustomer(String email) throws SQLException {
+	// Set isActive field of customer with their uid
+	public int deactivateCustomer(int uid) throws SQLException {
 		List<Integer> types = new ArrayList<Integer>();
 		List<Object> values = new ArrayList<Object>();
 		types.add(Types.CHAR);
-		values.add((Object) email);
+		values.add((Object) uid);
 		return execUpdateSQL(
-			"UPDATE Customer SET isActive = 0 WHERE email = cast(? as char(50))",
+			"UPDATE Customer SET isActive = 0 WHERE customerId = cast(? as integer)",
 			types,
 			values
 		);
