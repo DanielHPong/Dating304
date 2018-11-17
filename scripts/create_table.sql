@@ -10,6 +10,8 @@ drop table premium_package cascade constraints;
 drop table purchase cascade constraints;
 drop table benefits cascade constraints;
 drop table premium_to_benefit cascade constraints;
+drop sequence ora_d4m0b.incr_pId;
+drop sequence ora_d4m0b.incr_customerId;
 
 
 
@@ -171,14 +173,14 @@ insert into match (customer1Id, customer2Id, c1Active, c2Active) values
 	(5, 7, '1', '1');
 	
 insert into image_log (customerId, url) values
-	(2, "google.com/img1");
+	(2, 'google.com/img1');
 insert into image_log (customerId, url) values
-	(2, "google.com/img2");
+	(2, 'google.com/img2');
 insert into image_log (customerId, url) values
-	(3, "google.com/img3");
+	(3, 'google.com/img3');
 insert into image_log (customerId, url) values
-	(3, "google.com/img4");
+	(3, 'google.com/img4');
 insert into image_log (customerId, url) values
-	(4, "google.com/img5");
+	(4, 'google.com/img5');
 insert into image_log (customerId, url) values
-	(5, "google.com/img6");
+	(5, 'google.com/img6');

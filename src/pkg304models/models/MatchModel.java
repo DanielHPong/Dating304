@@ -33,22 +33,30 @@ public class MatchModel extends GenericModel<Match> {
 		return result;
 	}
 	
-	// Obtains a number of users whose personality fits best with the user with customerId cId
-	// for aggregation purpose
-	public int getNumBestMatches(int cId) throws SQLException {
+	// Returns [personality type, #broken matches] for a user with customerId cId
+	// Fulfills aggregation portion of project + reveals insight on what kind of personality is less likely to be
+	// compatible with the user
+	public List<Object> getPersonalityToBrokenMatchCount(int cId) throws SQLException {
 		List<Integer> types = new ArrayList<Integer>();
 		List<Object> values = new ArrayList<Object>();
-		types.add(Types.INTEGER);
-		values.add((Object) cId);
+		types.addAll(Arrays.asList(Types.INTEGER, Types.INTEGER));
+		values.addAll(Arrays.asList((Object) cId, (Object) cId));
 		
-		String cmd = "SELECT COUNT(gender) FROM Customer JOIN Personality JOIN Personality_Match"
-				+ " ON customerId = ? AND personalityId = pId AND personalityId = p1Id"
-				+ " GROUP BY gender";
+		String cmd = "SELECT type, COUNT(*)"
+				+ " FROM Customer JOIN Personality ON personalityId = pId"
+				+ " WHERE customerId IN"
+				+ " (SELECT customer1Id FROM Match WHERE (c1Active = 0 OR c2Active = 0) AND customer2Id = ?"
+				+ " UNION"
+				+ " SELECT customer2Id FROM Match WHERE (c1Active = 0 OR c2Active = 0) AND customer1Id = ?)"
+				+ " GROUP BY type";
 		ResultSet rs = execQuerySQL(cmd, types, values);
-		if (!rs.next()) {
-			throw new SQLException("error: no response was returned for getNumBestMatches(cId)");
+		
+		List<Object> result = new ArrayList<Object>();
+		if (rs.next()) {
+			result.add(rs.getString("type"));
+			result.add(rs.getInt("COUNT(*)"));
 		}
-		return rs.getInt("COUNT(gender)");
+		return result;
 	}
 
 	// Create matches between customer with id cId and all other users whose personalityId
@@ -56,8 +64,8 @@ public class MatchModel extends GenericModel<Match> {
 	public int createMatches(int cId, int pId, String gender) throws SQLException {	
 		List<Integer> types = new ArrayList<Integer>();
 		List<Object> values = new ArrayList<Object>();
-		types.addAll(Arrays.asList(Types.INTEGER, Types.CHAR, Types.INTEGER, Types.INTEGER));
-		values.addAll(Arrays.asList((Object) cId, (Object) gender, (Object) pId, (Object) pId));
+		types.addAll(Arrays.asList(Types.INTEGER, Types.CHAR, Types.INTEGER));
+		values.addAll(Arrays.asList((Object) cId, (Object) gender, (Object) pId));
 		
 		String cmd = "INSERT INTO Match (customer1Id, customer2Id, c1Active, c2Active)"
 				+ " SELECT ?, customerId, '1', '1'"
@@ -65,5 +73,20 @@ public class MatchModel extends GenericModel<Match> {
 				+ " WHERE gender <> cast(? as char(10)) AND personalityId IN"
 				+ " (SELECT p2Id FROM Personality_Match WHERE p1Id = ? AND rank < 3)";
 		return execUpdateSQL(cmd, types, values);
+	}
+	
+	// Deactivates a match given c1Id and c2Id (marked disabled by c1)
+	public int deactivateMatch(int c1Id, int c2Id) throws SQLException {	
+		List<Integer> types = new ArrayList<Integer>();
+		List<Object> values = new ArrayList<Object>();
+		types.addAll(Arrays.asList(Types.INTEGER, Types.INTEGER));
+		values.addAll(Arrays.asList((Object) c1Id, (Object) c2Id));
+		
+		String cmd1 = "UPDATE Match SET c1Active = 0 WHERE customer1Id = ? AND customer2Id = ?";
+		int res1 = execUpdateSQL(cmd1, types, values);
+		String cmd2 = "UPDATE Match SET c2Active = 0 WHERE customer2Id = ? AND customer1Id = ?";
+		int res2 = execUpdateSQL(cmd2, types, values);
+		
+		return res1 + res2;
 	}
 }

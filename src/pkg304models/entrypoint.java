@@ -6,6 +6,7 @@ import java.util.List;
 import pkg304data.Personality;
 import pkg304models.models.CustomerModel;
 import pkg304models.models.ImageModel;
+import pkg304models.models.MatchModel;
 import pkg304models.models.PersonalityModel;
 
 public class entrypoint {
@@ -15,12 +16,15 @@ public class entrypoint {
 		try {
 			ModelManager mManager = ModelManager.getInstance();
 
-			ImageModel iModel = (ImageModel) mManager.getModel(Table.IMAGE_LOG);
-			System.out.println("creating image: " + iModel.createImage(11, "yolo.com"));
-			System.out.println("creating image: " + iModel.createImage(11, "woohoo.com"));
-			System.out.println("11's images: " + iModel.getUserImage(11));
-			System.out.println("Deleting image: " + iModel.deleteImage(11, "woohoo.com"));
+			CustomerModel iModel = (CustomerModel) mManager.getModel(Table.CUSTOMER);
+			// System.out.println("creating customer: " + iModel.createCustomer("ts@gmail.com", "Taylor Swift", "F", 3));
+			int id = iModel.getIdFromEmail("ts@gmail.com");
+			System.out.println("id from email: " + id);
+			System.out.println("info from id: " + iModel.getCustomerInfoById(id));
 			
+			MatchModel mModel = (MatchModel) mManager.getModel(Table.MATCH);
+			// System.out.println("createMatches returned: " + mModel.createMatches(id, 3, "F"));
+			// System.out.println("getNumBestMatches returned: " + mModel.getNumBestMatches(id));
 			mManager.close();
 		} catch (SQLException e) {
 			System.out.println("ERROR: failed with message: " + e.getMessage());
