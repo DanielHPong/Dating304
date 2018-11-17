@@ -5,7 +5,10 @@
  */
 package pkg304ui.UI;
 
+import facadeUI.LogInManager;
+import facadeUI.UserManager;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import pkg304ui.UIUpdater;
 
@@ -20,6 +23,7 @@ public class UIFrame extends javax.swing.JFrame {
      */
     public UIFrame() {
         initComponents();
+        LogoutButton.setEnabled(false);
     }
 
     /**
@@ -38,6 +42,7 @@ public class UIFrame extends javax.swing.JFrame {
         matchesDropdown = new javax.swing.JComboBox<>();
         matchesStaticLabel = new javax.swing.JLabel();
         errorDynamicLabel = new javax.swing.JLabel();
+        LogoutButton = new javax.swing.JButton();
         RightPanel = new javax.swing.JPanel();
         RightScroll = new javax.swing.JScrollPane();
         RightText = new javax.swing.JTextPane();
@@ -64,6 +69,13 @@ public class UIFrame extends javax.swing.JFrame {
         errorDynamicLabel.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         errorDynamicLabel.setForeground(new java.awt.Color(222, 0, 0));
 
+        LogoutButton.setText("Logout");
+        LogoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogoutButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
         LeftPanelLayout.setHorizontalGroup(
@@ -77,12 +89,14 @@ public class UIFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(currentUserStaticLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(currentUserDynamicLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE))
+                        .addComponent(currentUserDynamicLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE))
                     .addGroup(LeftPanelLayout.createSequentialGroup()
                         .addComponent(matchesStaticLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(matchesDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(16, 16, 16)
+                .addComponent(LogoutButton)
                 .addContainerGap())
         );
         LeftPanelLayout.setVerticalGroup(
@@ -92,7 +106,8 @@ public class UIFrame extends javax.swing.JFrame {
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PickUserButton)
                     .addComponent(currentUserStaticLabel)
-                    .addComponent(currentUserDynamicLabel))
+                    .addComponent(currentUserDynamicLabel)
+                    .addComponent(LogoutButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(matchesStaticLabel)
@@ -148,11 +163,34 @@ public class UIFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void PickUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PickUserButtonActionPerformed
-        String userID = JOptionPane.showInputDialog("Please enter a User ID");
-        ArrayList matches = new ArrayList(); // TODO - get result from midlayer
-        UIUpdater.login(userID, matches);
-        UIUpdater.error("test");
+        String userEmail = JOptionPane.showInputDialog("Please enter a user email");
+        LogInManager logInManager = LogInManager.getInstance();
+        logInManager.login(userEmail);
+        if (logInManager.isLoggedOn()) {
+            LogoutButton.setEnabled(true);
+        } else {
+            int createNew = JOptionPane.showConfirmDialog(null, "This user doesn't exist. Do you want to create an account for this user?");
+            if (createNew == JOptionPane.YES_OPTION) {
+                String userName = JOptionPane.showInputDialog("Please enter a name for this user.");
+                logInManager.signUp(userEmail, userName);
+            } else {
+                return;
+            }
+        }
+        List matches = new ArrayList();
+        UserManager userManager = UserManager.getInstance();
+        userManager.getMatch(); // TODO - get result from midlayer
+        UIUpdater.login(userEmail, matches);
     }//GEN-LAST:event_PickUserButtonActionPerformed
+
+    private void LogoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutButtonActionPerformed
+        LogInManager logInManager = LogInManager.getInstance();
+        if (logInManager.isLoggedOn()) {
+            logInManager.logout();
+        } else {
+            UIUpdater.error("Cannot log out. Not logged in.");
+        }
+    }//GEN-LAST:event_LogoutButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,6 +230,7 @@ public class UIFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JPanel LeftPanel;
+    private javax.swing.JButton LogoutButton;
     private javax.swing.JButton PickUserButton;
     private javax.swing.JPanel RightPanel;
     private javax.swing.JScrollPane RightScroll;
