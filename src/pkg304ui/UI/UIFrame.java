@@ -65,16 +65,16 @@ public class UIFrame extends javax.swing.JFrame {
         deleteImageButton = new javax.swing.JButton();
         showPurchaseRecordsButton = new javax.swing.JButton();
         errorTextArea = new javax.swing.JTextArea();
+        getBrokenMatchesButton = new javax.swing.JButton();
         RightPanel = new javax.swing.JPanel();
         RightScroll = new javax.swing.JScrollPane();
         RightText = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1020, 768));
-        setMinimumSize(new java.awt.Dimension(1020, 768));
+        setMinimumSize(new java.awt.Dimension(1026, 796));
         setName("UIFrame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1020, 768));
-        setSize(new java.awt.Dimension(1020, 768));
+        setResizable(false);
+        setSize(new java.awt.Dimension(1026, 796));
 
         LeftPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         LeftPanel.setMaximumSize(new java.awt.Dimension(489, 744));
@@ -177,6 +177,13 @@ public class UIFrame extends javax.swing.JFrame {
         errorTextArea.setRows(5);
         errorTextArea.setDisabledTextColor(new java.awt.Color(222, 0, 0));
 
+        getBrokenMatchesButton.setText("Get Broken Matches");
+        getBrokenMatchesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                getBrokenMatchesButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
         LeftPanelLayout.setHorizontalGroup(
@@ -186,12 +193,6 @@ public class UIFrame extends javax.swing.JFrame {
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(errorTextArea)
                     .addComponent(addPaymentInfoButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(LeftPanelLayout.createSequentialGroup()
-                        .addComponent(matchesStaticLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(matchesDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(LogoutButton))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(buyPremiumButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -211,14 +212,23 @@ public class UIFrame extends javax.swing.JFrame {
                             .addComponent(uploadImageButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(LeftPanelLayout.createSequentialGroup()
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(showPurchaseRecordsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(LeftPanelLayout.createSequentialGroup()
-                                .addComponent(PickUserButton)
+                                .addComponent(matchesStaticLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(currentUserStaticLabel))
+                                .addComponent(matchesDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(showPurchaseRecordsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(getBrokenMatchesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(LeftPanelLayout.createSequentialGroup()
-                                .addGap(183, 183, 183)
-                                .addComponent(currentUserDynamicLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(LeftPanelLayout.createSequentialGroup()
+                                        .addComponent(PickUserButton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(currentUserStaticLabel))
+                                    .addGroup(LeftPanelLayout.createSequentialGroup()
+                                        .addGap(183, 183, 183)
+                                        .addComponent(currentUserDynamicLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(LogoutButton)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -230,12 +240,12 @@ public class UIFrame extends javax.swing.JFrame {
                     .addComponent(currentUserDynamicLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(PickUserButton)
-                        .addComponent(currentUserStaticLabel)))
+                        .addComponent(currentUserStaticLabel))
+                    .addComponent(LogoutButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(matchesStaticLabel)
-                    .addComponent(matchesDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LogoutButton))
+                    .addComponent(matchesDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(getMessagesButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -254,9 +264,11 @@ public class UIFrame extends javax.swing.JFrame {
                     .addComponent(uploadImageButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(deleteImageButton)
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(getBrokenMatchesButton)
+                .addGap(18, 18, 18)
                 .addComponent(showPurchaseRecordsButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 325, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 307, Short.MAX_VALUE)
                 .addComponent(errorTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -279,7 +291,7 @@ public class UIFrame extends javax.swing.JFrame {
         );
         RightPanelLayout.setVerticalGroup(
             RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(RightScroll)
+            .addComponent(RightScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -298,8 +310,8 @@ public class UIFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(RightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(LeftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(RightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LeftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -346,7 +358,7 @@ public class UIFrame extends javax.swing.JFrame {
         UserManager userManager = UserManager.getInstance();
         if (logInManager.isLoggedOn()) {
             if (matchesDropdown.getSelectedItem() != null) {
-                String otherUser = (String)matchesDropdown.getSelectedItem();
+                String otherUser = (String) matchesDropdown.getSelectedItem();
                 userManager.getMessage(otherUser);
             } else {
                 UIUpdater.error("No user selected.");
@@ -483,6 +495,16 @@ public class UIFrame extends javax.swing.JFrame {
         viewer.showBuyRecords();
     }//GEN-LAST:event_showPurchaseRecordsButtonActionPerformed
 
+    private void getBrokenMatchesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getBrokenMatchesButtonActionPerformed
+        LogInManager logInManager = LogInManager.getInstance();
+        UserManager userManager = UserManager.getInstance();
+        if (logInManager.isLoggedOn()) {
+            userManager.getBrokenMatchesByType();
+        } else {
+            UIUpdater.error("Not logged in.");
+        }
+    }//GEN-LAST:event_getBrokenMatchesButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -533,6 +555,7 @@ public class UIFrame extends javax.swing.JFrame {
     private javax.swing.JLabel currentUserStaticLabel;
     public javax.swing.JButton deleteImageButton;
     public javax.swing.JTextArea errorTextArea;
+    public javax.swing.JButton getBrokenMatchesButton;
     public javax.swing.JButton getImageButton;
     public javax.swing.JButton getMessagesButton;
     public javax.swing.JComboBox<String> matchesDropdown;
