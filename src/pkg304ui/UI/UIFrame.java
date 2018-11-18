@@ -8,6 +8,7 @@ package pkg304ui.UI;
 import facadeUI.LogInManager;
 import facadeUI.UserManager;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.swing.JOptionPane;
 import pkg304ui.UIUpdater;
@@ -27,6 +28,8 @@ public class UIFrame extends javax.swing.JFrame {
         getMessagesButton.setEnabled(false);
         sendMessageButton.setEnabled(false);
         sendMessageTextField.setEnabled(false);
+        buyPremiumButton.setEnabled(false);
+        cancelPremiumButton.setEnabled(false);
     }
 
     /**
@@ -49,6 +52,8 @@ public class UIFrame extends javax.swing.JFrame {
         getMessagesButton = new javax.swing.JButton();
         sendMessageButton = new javax.swing.JButton();
         sendMessageTextField = new javax.swing.JTextField();
+        buyPremiumButton = new javax.swing.JButton();
+        cancelPremiumButton = new javax.swing.JButton();
         RightPanel = new javax.swing.JPanel();
         RightScroll = new javax.swing.JScrollPane();
         RightText = new javax.swing.JTextPane();
@@ -96,6 +101,20 @@ public class UIFrame extends javax.swing.JFrame {
             }
         });
 
+        buyPremiumButton.setText("Buy Premium");
+        buyPremiumButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buyPremiumButtonActionPerformed(evt);
+            }
+        });
+
+        cancelPremiumButton.setText("Cancel Premium");
+        cancelPremiumButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelPremiumButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
         LeftPanelLayout.setHorizontalGroup(
@@ -120,11 +139,16 @@ public class UIFrame extends javax.swing.JFrame {
                         .addGap(16, 16, 16)
                         .addComponent(LogoutButton))
                     .addGroup(LeftPanelLayout.createSequentialGroup()
-                        .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(getMessagesButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(sendMessageButton, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                        .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(buyPremiumButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(getMessagesButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(sendMessageButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(sendMessageTextField)))
+                        .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(sendMessageTextField)
+                            .addGroup(LeftPanelLayout.createSequentialGroup()
+                                .addComponent(cancelPremiumButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         LeftPanelLayout.setVerticalGroup(
@@ -146,7 +170,11 @@ public class UIFrame extends javax.swing.JFrame {
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sendMessageButton)
                     .addComponent(sendMessageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 601, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buyPremiumButton)
+                    .addComponent(cancelPremiumButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 571, Short.MAX_VALUE)
                 .addComponent(errorDynamicLabel)
                 .addContainerGap())
         );
@@ -208,19 +236,25 @@ public class UIFrame extends javax.swing.JFrame {
             getMessagesButton.setEnabled(true);
             sendMessageButton.setEnabled(true);
             sendMessageTextField.setEnabled(true);
+            buyPremiumButton.setEnabled(true);
+            cancelPremiumButton.setEnabled(true);
         } else {
             int createNew = JOptionPane.showConfirmDialog(null, "This user doesn't exist. Do you want to create an account for this user?");
             if (createNew == JOptionPane.YES_OPTION) {
                 String userName = JOptionPane.showInputDialog("Please enter a name for this user.");
-                Object[] possibilities = {"1", "2", "3", "4"};
-                String personality = (String)JOptionPane.showInputDialog(null,null,"Please choose a personality type.",JOptionPane.PLAIN_MESSAGE,null,possibilities,"1");
-                if (personality != null) {
-                    int pid = Integer.parseInt(personality);
-                    logInManager.signUp(userEmail, userName, pid);
+                Object[] perpos = {"1", "2", "3", "4"};
+                String personality = (String)JOptionPane.showInputDialog(null,null,"Please choose a personality type.",JOptionPane.PLAIN_MESSAGE,null,perpos,"1");
+                Object[] genpos = {"MALE", "FEMALE"};
+                String gender = (String)JOptionPane.showInputDialog(null,null,"Please choose a gender.",JOptionPane.PLAIN_MESSAGE,null,genpos,"MALE");
+                if (personality != null && userName != null && gender != null) {
+                    int pid = Integer.getInteger(personality);
+                    logInManager.signUp(userEmail, userName, gender, pid);
                     LogoutButton.setEnabled(true);
                     getMessagesButton.setEnabled(true);
                     sendMessageButton.setEnabled(true);
                     sendMessageTextField.setEnabled(true);
+                    buyPremiumButton.setEnabled(true);
+                    cancelPremiumButton.setEnabled(true);
                 } else {
                     return;
                 }
@@ -242,6 +276,8 @@ public class UIFrame extends javax.swing.JFrame {
             getMessagesButton.setEnabled(false);
             sendMessageButton.setEnabled(false);
             sendMessageTextField.setEnabled(false);
+            buyPremiumButton.setEnabled(false);
+            cancelPremiumButton.setEnabled(false);
         } else {
             UIUpdater.error("Not logged in.");
         }
@@ -280,6 +316,53 @@ public class UIFrame extends javax.swing.JFrame {
             UIUpdater.error("Not logged in.");
         }
     }//GEN-LAST:event_sendMessageButtonActionPerformed
+
+    private Object[] appendValue(Object[] obj, Object newObj) {
+	ArrayList<Object> temp = new ArrayList<Object>(Arrays.asList(obj));
+	temp.add(newObj);
+	return temp.toArray();
+  }
+    
+    private void buyPremiumButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyPremiumButtonActionPerformed
+        LogInManager logInManager = LogInManager.getInstance();
+        UserManager userManager = UserManager.getInstance();
+        if (logInManager.isLoggedOn()) {
+            List pos = new ArrayList(); // TODO - Get list of premium packages
+            Object[] possibilities = {};
+            for (Object p : pos) {
+                possibilities = appendValue(possibilities, p);
+            }
+            String premium = (String)JOptionPane.showInputDialog(null,null,"Please choose a premium package to buy.",JOptionPane.PLAIN_MESSAGE,null,possibilities,pos.get(0));
+            if (premium != null) {
+                // TODO - Get payment info
+                // userManager.buyPrem(premium);
+            } else {
+                return;
+            }
+        } else {
+            UIUpdater.error("Not logged in.");
+        }
+    }//GEN-LAST:event_buyPremiumButtonActionPerformed
+
+    private void cancelPremiumButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelPremiumButtonActionPerformed
+        LogInManager logInManager = LogInManager.getInstance();
+        UserManager userManager = UserManager.getInstance();
+        if (logInManager.isLoggedOn()) {
+            List pos = new ArrayList(); // TODO - Get list of premium packages
+            Object[] possibilities = {};
+            for (Object p : pos) {
+                possibilities = appendValue(possibilities, p);
+            }
+            String premium = (String)JOptionPane.showInputDialog(null,null,"Please choose a premium package to cancel.",JOptionPane.PLAIN_MESSAGE,null,possibilities,pos.get(0));
+            if (premium != null) {
+                userManager.cancelPrem(premium);
+            } else {
+                return;
+            }
+        } else {
+            UIUpdater.error("Not logged in.");
+        }
+    }//GEN-LAST:event_cancelPremiumButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -324,6 +407,8 @@ public class UIFrame extends javax.swing.JFrame {
     private javax.swing.JPanel RightPanel;
     private javax.swing.JScrollPane RightScroll;
     public javax.swing.JTextPane RightText;
+    private javax.swing.JButton buyPremiumButton;
+    private javax.swing.JButton cancelPremiumButton;
     public javax.swing.JLabel currentUserDynamicLabel;
     private javax.swing.JLabel currentUserStaticLabel;
     public javax.swing.JLabel errorDynamicLabel;

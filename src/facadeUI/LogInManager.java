@@ -71,13 +71,13 @@ public class LogInManager {
 	}
 
 	// SignUp Method
-	public void signUp(String email, String name, int pid) {
+	public void signUp(String email, String name, String gender, int pid) {
 		if (isLoggedOn) {
 			UIUpdater.error("Please logout before signing up!");
 		} else {
 			// SignUp Process
 			try {
-				cModel.createCustomer(email, name, pID);
+				cModel.createCustomer(email, name, gender, pid);
 				// Auto SignOn
 				login(email);
 			} catch (SQLException e){

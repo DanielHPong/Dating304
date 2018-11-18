@@ -92,13 +92,20 @@
                           <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           <Component id="LogoutButton" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="getMessagesButton" max="32767" attributes="0"/>
-                              <Component id="sendMessageButton" pref="120" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="buyPremiumButton" alignment="0" max="32767" attributes="0"/>
+                              <Component id="getMessagesButton" alignment="0" max="32767" attributes="0"/>
+                              <Component id="sendMessageButton" alignment="0" pref="120" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="sendMessageTextField" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="sendMessageTextField" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="cancelPremiumButton" min="-2" pref="120" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -127,7 +134,12 @@
                       <Component id="sendMessageButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="sendMessageTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="601" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="buyPremiumButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cancelPremiumButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="571" max="32767" attributes="0"/>
                   <Component id="errorDynamicLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -210,6 +222,22 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="sendMessageTextField">
+        </Component>
+        <Component class="javax.swing.JButton" name="buyPremiumButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Buy Premium"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buyPremiumButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="cancelPremiumButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Cancel Premium"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelPremiumButtonActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
