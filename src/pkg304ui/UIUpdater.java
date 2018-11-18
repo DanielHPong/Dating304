@@ -27,6 +27,15 @@ public class UIUpdater {
         return true;
     }
     
+    public static boolean getMessages(List messages) {
+        String output = "";
+        for (Object message : messages) {
+            // TODO - Parse the message object and add it to the output
+        }
+        setText(output);
+        return true;
+    }
+    
     public static void setText(String text) {
         UIMain.setText(text);
     }
