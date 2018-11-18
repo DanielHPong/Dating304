@@ -84,6 +84,10 @@ public class UIFrame extends javax.swing.JFrame {
         currentUserStaticLabel.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         currentUserStaticLabel.setText("Current User: ");
 
+        currentUserDynamicLabel.setMaximumSize(new java.awt.Dimension(25, 199));
+        currentUserDynamicLabel.setMinimumSize(new java.awt.Dimension(25, 199));
+        currentUserDynamicLabel.setPreferredSize(new java.awt.Dimension(25, 199));
+
         matchesStaticLabel.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         matchesStaticLabel.setText("Matches");
 
@@ -163,19 +167,25 @@ public class UIFrame extends javax.swing.JFrame {
                     .addComponent(addPaymentInfoButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(LeftPanelLayout.createSequentialGroup()
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(errorDynamicLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(LeftPanelLayout.createSequentialGroup()
-                                .addComponent(PickUserButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(currentUserStaticLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(currentUserDynamicLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(errorDynamicLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(LeftPanelLayout.createSequentialGroup()
+                                        .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(LeftPanelLayout.createSequentialGroup()
+                                                .addComponent(matchesStaticLabel)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(matchesDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(LeftPanelLayout.createSequentialGroup()
+                                                .addComponent(PickUserButton)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(currentUserStaticLabel)))
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(LeftPanelLayout.createSequentialGroup()
-                                .addComponent(matchesStaticLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(matchesDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 163, Short.MAX_VALUE)))
-                        .addGap(16, 16, 16)
+                                .addGap(183, 183, 183)
+                                .addComponent(currentUserDynamicLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addComponent(LogoutButton))
                     .addGroup(LeftPanelLayout.createSequentialGroup()
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -204,8 +214,8 @@ public class UIFrame extends javax.swing.JFrame {
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PickUserButton)
                     .addComponent(currentUserStaticLabel)
-                    .addComponent(currentUserDynamicLabel)
-                    .addComponent(LogoutButton))
+                    .addComponent(LogoutButton)
+                    .addComponent(currentUserDynamicLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(matchesStaticLabel)
@@ -228,7 +238,7 @@ public class UIFrame extends javax.swing.JFrame {
                     .addComponent(uploadImageButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(deleteImageButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 481, Short.MAX_VALUE)
+                .addGap(481, 481, 481)
                 .addComponent(errorDynamicLabel)
                 .addContainerGap())
         );
@@ -268,8 +278,8 @@ public class UIFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(RightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(LeftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(RightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 919, Short.MAX_VALUE)
+                    .addComponent(LeftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 919, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
