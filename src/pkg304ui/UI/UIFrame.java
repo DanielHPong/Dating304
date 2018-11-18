@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.JOptionPane;
-import pkg304data.PaymentInfo;
 import pkg304data.PremiumPackage;
 import pkg304ui.UIUpdater;
 
@@ -34,6 +33,8 @@ public class UIFrame extends javax.swing.JFrame {
         buyPremiumButton.setEnabled(false);
         cancelPremiumButton.setEnabled(false);
         addPaymentInfoButton.setEnabled(false);
+        getImageButton.setEnabled(false);
+        uploadImageButton.setEnabled(false);
     }
 
     /**
@@ -59,6 +60,9 @@ public class UIFrame extends javax.swing.JFrame {
         buyPremiumButton = new javax.swing.JButton();
         cancelPremiumButton = new javax.swing.JButton();
         addPaymentInfoButton = new javax.swing.JButton();
+        getImageButton = new javax.swing.JButton();
+        uploadImageButton = new javax.swing.JButton();
+        deleteImageButton = new javax.swing.JButton();
         RightPanel = new javax.swing.JPanel();
         RightScroll = new javax.swing.JScrollPane();
         RightText = new javax.swing.JTextPane();
@@ -128,6 +132,27 @@ public class UIFrame extends javax.swing.JFrame {
             }
         });
 
+        getImageButton.setText("Get Image");
+        getImageButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                getImageButtonActionPerformed(evt);
+            }
+        });
+
+        uploadImageButton.setText("Upload Image");
+        uploadImageButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                uploadImageButtonActionPerformed(evt);
+            }
+        });
+
+        deleteImageButton.setText("Delete Image");
+        deleteImageButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteImageButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
         LeftPanelLayout.setHorizontalGroup(
@@ -135,6 +160,7 @@ public class UIFrame extends javax.swing.JFrame {
             .addGroup(LeftPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(addPaymentInfoButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(LeftPanelLayout.createSequentialGroup()
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(errorDynamicLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -143,12 +169,12 @@ public class UIFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(currentUserStaticLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(currentUserDynamicLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE))
+                                .addComponent(currentUserDynamicLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(LeftPanelLayout.createSequentialGroup()
                                 .addComponent(matchesStaticLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(matchesDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(0, 163, Short.MAX_VALUE)))
                         .addGap(16, 16, 16)
                         .addComponent(LogoutButton))
                     .addGroup(LeftPanelLayout.createSequentialGroup()
@@ -162,7 +188,13 @@ public class UIFrame extends javax.swing.JFrame {
                             .addGroup(LeftPanelLayout.createSequentialGroup()
                                 .addComponent(cancelPremiumButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))))
-                    .addComponent(addPaymentInfoButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(LeftPanelLayout.createSequentialGroup()
+                        .addComponent(getImageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(deleteImageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(uploadImageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         LeftPanelLayout.setVerticalGroup(
@@ -190,7 +222,13 @@ public class UIFrame extends javax.swing.JFrame {
                     .addComponent(cancelPremiumButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addPaymentInfoButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 541, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(getImageButton)
+                    .addComponent(uploadImageButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(deleteImageButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 481, Short.MAX_VALUE)
                 .addComponent(errorDynamicLabel)
                 .addContainerGap())
         );
@@ -326,7 +364,7 @@ public class UIFrame extends javax.swing.JFrame {
             for (PremiumPackage p : pos) {
                 possibilities = appendValue(possibilities, p.getpName());
             }
-            String premium = (String)JOptionPane.showInputDialog(null,null,"Please choose a premium package to buy.",JOptionPane.PLAIN_MESSAGE,null,possibilities,pos.get(0));
+            String premium = (String)JOptionPane.showInputDialog(null,null,"Please choose a premium package to buy.",JOptionPane.PLAIN_MESSAGE,null,possibilities,pos.get(0).getpName());
             if (premium != null) {
                 userManager.buyPrem(premium);
             }
@@ -350,7 +388,7 @@ public class UIFrame extends javax.swing.JFrame {
             for (PremiumPackage p : pos) {
                 possibilities = appendValue(possibilities, p.getpName());
             }
-            String premium = (String)JOptionPane.showInputDialog(null,null,"Please choose a premium package to cancel.",JOptionPane.PLAIN_MESSAGE,null,possibilities,pos.get(0));
+            String premium = (String)JOptionPane.showInputDialog(null,null,"Please choose a premium package to cancel.",JOptionPane.PLAIN_MESSAGE,null,possibilities,pos.get(0).getpName());
             if (premium != null) {
                 userManager.cancelPrem(premium);
             }
@@ -368,6 +406,47 @@ public class UIFrame extends javax.swing.JFrame {
             userManager.addPaymentInfo(cardType, cardNo, cardAddress);
         }
     }//GEN-LAST:event_addPaymentInfoButtonActionPerformed
+
+    private void getImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getImageButtonActionPerformed
+        LogInManager logInManager = LogInManager.getInstance();
+        UserManager userManager = UserManager.getInstance();
+        if (logInManager.isLoggedOn()) {
+            userManager.viewImage();
+        } else {
+            UIUpdater.error("Not logged in.");
+        }
+    }//GEN-LAST:event_getImageButtonActionPerformed
+
+    private void uploadImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadImageButtonActionPerformed
+        LogInManager logInManager = LogInManager.getInstance();
+        UserManager userManager = UserManager.getInstance();
+        if (logInManager.isLoggedOn()) {
+            String imageURL = JOptionPane.showInputDialog("Please enter an image URL this user.");
+            if (imageURL != null) {
+                userManager.uploadImage(imageURL);
+            }
+        } else {
+            UIUpdater.error("Not logged in.");
+        }
+    }//GEN-LAST:event_uploadImageButtonActionPerformed
+
+    private void deleteImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteImageButtonActionPerformed
+        LogInManager logInManager = LogInManager.getInstance();
+        UserManager userManager = UserManager.getInstance();
+        if (logInManager.isLoggedOn()) {
+            ArrayList<String> pos = userManager.getImage();
+            Object[] possibilities = {};
+            for (String p : pos) {
+                possibilities = appendValue(possibilities, p);
+            }
+            String imageURL = (String)JOptionPane.showInputDialog(null,null,"Please choose an image to delete.",JOptionPane.PLAIN_MESSAGE,null,possibilities,pos.get(0));
+            if (imageURL != null) {
+                userManager.deleteImage(imageURL);
+            }
+        } else {
+            UIUpdater.error("Not logged in.");
+        }
+    }//GEN-LAST:event_deleteImageButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -417,11 +496,14 @@ public class UIFrame extends javax.swing.JFrame {
     public javax.swing.JButton cancelPremiumButton;
     public javax.swing.JLabel currentUserDynamicLabel;
     private javax.swing.JLabel currentUserStaticLabel;
+    public javax.swing.JButton deleteImageButton;
     public javax.swing.JLabel errorDynamicLabel;
+    public javax.swing.JButton getImageButton;
     public javax.swing.JButton getMessagesButton;
     public javax.swing.JComboBox<String> matchesDropdown;
     private javax.swing.JLabel matchesStaticLabel;
     public javax.swing.JButton sendMessageButton;
     public javax.swing.JTextField sendMessageTextField;
+    public javax.swing.JButton uploadImageButton;
     // End of variables declaration//GEN-END:variables
 }
