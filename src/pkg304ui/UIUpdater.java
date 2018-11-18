@@ -16,7 +16,7 @@ import pkg304data.PaymentInfo;
 public class UIUpdater {
     
     public static void error(String error) {
-        UIMain.UI.errorDynamicLabel.setText("Error: "+error);
+        UIMain.UI.errorTextArea.setText("Error: "+error);
     }
     
     public static boolean login(String user, List matches) {
@@ -51,6 +51,7 @@ public class UIUpdater {
         }
         UIMain.UI.getImageButton.setEnabled(true);
         UIMain.UI.uploadImageButton.setEnabled(true);
+        UIMain.UI.deleteImageButton.setEnabled(true);
         return true;
     }
     
@@ -66,6 +67,7 @@ public class UIUpdater {
         UIMain.UI.addPaymentInfoButton.setEnabled(false);
         UIMain.UI.getImageButton.setEnabled(false);
         UIMain.UI.uploadImageButton.setEnabled(false);
+        UIMain.UI.deleteImageButton.setEnabled(false);
         return true;
     }
     

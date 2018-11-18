@@ -35,6 +35,7 @@ public class UIFrame extends javax.swing.JFrame {
         addPaymentInfoButton.setEnabled(false);
         getImageButton.setEnabled(false);
         uploadImageButton.setEnabled(false);
+        deleteImageButton.setEnabled(false);
     }
 
     /**
@@ -52,7 +53,6 @@ public class UIFrame extends javax.swing.JFrame {
         currentUserDynamicLabel = new javax.swing.JLabel();
         matchesDropdown = new javax.swing.JComboBox<>();
         matchesStaticLabel = new javax.swing.JLabel();
-        errorDynamicLabel = new javax.swing.JLabel();
         LogoutButton = new javax.swing.JButton();
         getMessagesButton = new javax.swing.JButton();
         sendMessageButton = new javax.swing.JButton();
@@ -63,15 +63,22 @@ public class UIFrame extends javax.swing.JFrame {
         getImageButton = new javax.swing.JButton();
         uploadImageButton = new javax.swing.JButton();
         deleteImageButton = new javax.swing.JButton();
+        showPurchaseRecordsButton = new javax.swing.JButton();
+        errorTextArea = new javax.swing.JTextArea();
         RightPanel = new javax.swing.JPanel();
         RightScroll = new javax.swing.JScrollPane();
         RightText = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1020, 768));
+        setMinimumSize(new java.awt.Dimension(1020, 768));
         setName("UIFrame"); // NOI18N
-        setResizable(false);
+        setPreferredSize(new java.awt.Dimension(1020, 768));
+        setSize(new java.awt.Dimension(1020, 768));
 
         LeftPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        LeftPanel.setMaximumSize(new java.awt.Dimension(489, 744));
+        LeftPanel.setMinimumSize(new java.awt.Dimension(489, 744));
         LeftPanel.setPreferredSize(new java.awt.Dimension(489, 744));
 
         PickUserButton.setText("Pick User");
@@ -90,9 +97,6 @@ public class UIFrame extends javax.swing.JFrame {
 
         matchesStaticLabel.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         matchesStaticLabel.setText("Matches");
-
-        errorDynamicLabel.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        errorDynamicLabel.setForeground(new java.awt.Color(222, 0, 0));
 
         LogoutButton.setText("Logout");
         LogoutButton.addActionListener(new java.awt.event.ActionListener() {
@@ -157,6 +161,22 @@ public class UIFrame extends javax.swing.JFrame {
             }
         });
 
+        showPurchaseRecordsButton.setText("Show Purchase Records");
+        showPurchaseRecordsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showPurchaseRecordsButtonActionPerformed(evt);
+            }
+        });
+
+        errorTextArea.setEditable(false);
+        errorTextArea.setBackground(new java.awt.Color(222, 222, 222));
+        errorTextArea.setColumns(20);
+        errorTextArea.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        errorTextArea.setForeground(new java.awt.Color(222, 0, 0));
+        errorTextArea.setLineWrap(true);
+        errorTextArea.setRows(5);
+        errorTextArea.setDisabledTextColor(new java.awt.Color(222, 0, 0));
+
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
         LeftPanelLayout.setHorizontalGroup(
@@ -164,46 +184,41 @@ public class UIFrame extends javax.swing.JFrame {
             .addGroup(LeftPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(errorTextArea)
                     .addComponent(addPaymentInfoButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(LeftPanelLayout.createSequentialGroup()
-                        .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(LeftPanelLayout.createSequentialGroup()
-                                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(errorDynamicLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(LeftPanelLayout.createSequentialGroup()
-                                        .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(LeftPanelLayout.createSequentialGroup()
-                                                .addComponent(matchesStaticLabel)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(matchesDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(LeftPanelLayout.createSequentialGroup()
-                                                .addComponent(PickUserButton)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(currentUserStaticLabel)))
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(LeftPanelLayout.createSequentialGroup()
-                                .addGap(183, 183, 183)
-                                .addComponent(currentUserDynamicLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(matchesStaticLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(matchesDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(LogoutButton))
-                    .addGroup(LeftPanelLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(buyPremiumButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(getMessagesButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(sendMessageButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(sendMessageTextField)
                             .addGroup(LeftPanelLayout.createSequentialGroup()
                                 .addComponent(cancelPremiumButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(sendMessageTextField)))
                     .addGroup(LeftPanelLayout.createSequentialGroup()
                         .addComponent(getImageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(deleteImageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(uploadImageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(deleteImageButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(uploadImageButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(LeftPanelLayout.createSequentialGroup()
+                        .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(showPurchaseRecordsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(LeftPanelLayout.createSequentialGroup()
+                                .addComponent(PickUserButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(currentUserStaticLabel))
+                            .addGroup(LeftPanelLayout.createSequentialGroup()
+                                .addGap(183, 183, 183)
+                                .addComponent(currentUserDynamicLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -211,15 +226,16 @@ public class UIFrame extends javax.swing.JFrame {
             LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LeftPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(PickUserButton)
-                    .addComponent(currentUserStaticLabel)
-                    .addComponent(LogoutButton)
-                    .addComponent(currentUserDynamicLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(currentUserDynamicLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(PickUserButton)
+                        .addComponent(currentUserStaticLabel)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(matchesStaticLabel)
-                    .addComponent(matchesDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(matchesDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LogoutButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(getMessagesButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -238,12 +254,16 @@ public class UIFrame extends javax.swing.JFrame {
                     .addComponent(uploadImageButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(deleteImageButton)
-                .addGap(481, 481, 481)
-                .addComponent(errorDynamicLabel)
+                .addGap(30, 30, 30)
+                .addComponent(showPurchaseRecordsButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 325, Short.MAX_VALUE)
+                .addComponent(errorTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         RightPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        RightPanel.setMaximumSize(new java.awt.Dimension(489, 744));
+        RightPanel.setMinimumSize(new java.awt.Dimension(489, 744));
         RightPanel.setPreferredSize(new java.awt.Dimension(489, 744));
 
         RightScroll.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -275,12 +295,12 @@ public class UIFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(RightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 919, Short.MAX_VALUE)
-                    .addComponent(LeftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 919, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(RightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(LeftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         LeftPanel.getAccessibleContext().setAccessibleName("");
@@ -458,6 +478,11 @@ public class UIFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteImageButtonActionPerformed
 
+    private void showPurchaseRecordsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPurchaseRecordsButtonActionPerformed
+        Viewer viewer = Viewer.getInstance();
+        viewer.showBuyRecords();
+    }//GEN-LAST:event_showPurchaseRecordsButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -507,13 +532,14 @@ public class UIFrame extends javax.swing.JFrame {
     public javax.swing.JLabel currentUserDynamicLabel;
     private javax.swing.JLabel currentUserStaticLabel;
     public javax.swing.JButton deleteImageButton;
-    public javax.swing.JLabel errorDynamicLabel;
+    public javax.swing.JTextArea errorTextArea;
     public javax.swing.JButton getImageButton;
     public javax.swing.JButton getMessagesButton;
     public javax.swing.JComboBox<String> matchesDropdown;
     private javax.swing.JLabel matchesStaticLabel;
     public javax.swing.JButton sendMessageButton;
     public javax.swing.JTextField sendMessageTextField;
+    public javax.swing.JButton showPurchaseRecordsButton;
     public javax.swing.JButton uploadImageButton;
     // End of variables declaration//GEN-END:variables
 }
