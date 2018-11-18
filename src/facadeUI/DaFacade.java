@@ -21,4 +21,6 @@ public interface DaFacade {
 	public void showBuyRecords();
 	public List<PremiumPackage> viewPrem() throws Exception;
 	public List<PremiumPackage> myPremiums() throws Exception;
+	public void addPaymentInfo(String cardType, String cardNo, String address);
+	public void deletePaymentInfo();
 }

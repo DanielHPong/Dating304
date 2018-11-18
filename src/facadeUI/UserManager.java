@@ -168,6 +168,38 @@ public class UserManager {
 		}
 	}
 	
+	// Creates PaymentInfo table for this user
+	public void addPaymentInfo(String cardType, String cardNo, String address) {
+		if (!LoginMan.isLoggedOn()) {
+			UIUpdater.error("Error: You are not logged in.");
+		} else {
+			int uid = LoginMan.getUID();
+			try {
+				PaymentInfoModel pModel = (PaymentInfoModel) modelMan.getModel(Table.PAYMENT_INFO);
+				pModel.createPaymentInfo(uid, cardType, cardNo, address);
+				UIUpdater.setText("Your payment info has been created!");
+			} catch (SQLException e) {
+				UIUpdater.error("Failed creating paymentInfo: " + e.getMessage());
+			}
+		}
+	}
+	
+	// Deletes paymentInfo table 
+	public void deletePaymentInfo() {
+		if (!LoginMan.isLoggedOn()) {
+			UIUpdater.error("Error: You are not logged in.");
+		} else {
+			int uid = LoginMan.getUID();
+			try {
+				PaymentInfoModel pModel = (PaymentInfoModel) modelMan.getModel(Table.PAYMENT_INFO);
+				pModel.deletePaymentInfo(uid);
+				UIUpdater.setText("Your payment info has been deleted!");
+			} catch (SQLException e) {
+				UIUpdater.error("Failed deleting paymentInfo: " + e.getMessage());
+			}
+		}
+	}
+	
 	// Returns PaymentInfo object for this user.
 	public PaymentInfo viewPaymentInfo() throws Exception{
 		if (!LoginMan.isLoggedOn()) {
