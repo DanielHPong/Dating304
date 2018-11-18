@@ -31,6 +31,7 @@ public class UIUpdater {
         UIMain.UI.sendMessageTextField.setEnabled(true);
         UIMain.UI.buyPremiumButton.setEnabled(true);
         UIMain.UI.cancelPremiumButton.setEnabled(true);
+        UIMain.UI.addPaymentInfoButton.setEnabled(true);
         return true;
     }
     
@@ -43,6 +44,7 @@ public class UIUpdater {
         UIMain.UI.sendMessageTextField.setEnabled(false);
         UIMain.UI.buyPremiumButton.setEnabled(false);
         UIMain.UI.cancelPremiumButton.setEnabled(false);
+        UIMain.UI.addPaymentInfoButton.setEnabled(false);
         return true;
     }
     

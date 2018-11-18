@@ -33,6 +33,7 @@ public class UIFrame extends javax.swing.JFrame {
         sendMessageTextField.setEnabled(false);
         buyPremiumButton.setEnabled(false);
         cancelPremiumButton.setEnabled(false);
+        addPaymentInfoButton.setEnabled(false);
     }
 
     /**
@@ -57,6 +58,7 @@ public class UIFrame extends javax.swing.JFrame {
         sendMessageTextField = new javax.swing.JTextField();
         buyPremiumButton = new javax.swing.JButton();
         cancelPremiumButton = new javax.swing.JButton();
+        addPaymentInfoButton = new javax.swing.JButton();
         RightPanel = new javax.swing.JPanel();
         RightScroll = new javax.swing.JScrollPane();
         RightText = new javax.swing.JTextPane();
@@ -75,6 +77,7 @@ public class UIFrame extends javax.swing.JFrame {
             }
         });
 
+        currentUserStaticLabel.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         currentUserStaticLabel.setText("Current User: ");
 
         matchesStaticLabel.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -118,6 +121,13 @@ public class UIFrame extends javax.swing.JFrame {
             }
         });
 
+        addPaymentInfoButton.setText("Add Payment Info");
+        addPaymentInfoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addPaymentInfoButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
         LeftPanelLayout.setHorizontalGroup(
@@ -133,7 +143,7 @@ public class UIFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(currentUserStaticLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(currentUserDynamicLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE))
+                                .addComponent(currentUserDynamicLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE))
                             .addGroup(LeftPanelLayout.createSequentialGroup()
                                 .addComponent(matchesStaticLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -151,7 +161,8 @@ public class UIFrame extends javax.swing.JFrame {
                             .addComponent(sendMessageTextField)
                             .addGroup(LeftPanelLayout.createSequentialGroup()
                                 .addComponent(cancelPremiumButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addComponent(addPaymentInfoButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         LeftPanelLayout.setVerticalGroup(
@@ -177,7 +188,9 @@ public class UIFrame extends javax.swing.JFrame {
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buyPremiumButton)
                     .addComponent(cancelPremiumButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 571, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addPaymentInfoButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 541, Short.MAX_VALUE)
                 .addComponent(errorDynamicLabel)
                 .addContainerGap())
         );
@@ -244,7 +257,7 @@ public class UIFrame extends javax.swing.JFrame {
                 Object[] genpos = {"MALE", "FEMALE"};
                 String gender = (String)JOptionPane.showInputDialog(null,null,"Please choose a gender.",JOptionPane.PLAIN_MESSAGE,null,genpos,"MALE");
                 if (personality != null && userName != null && gender != null) {
-                    int pid = Integer.getInteger(personality);
+                    int pid = Integer.parseInt(personality);
                     logInManager.signUp(userEmail, userName, gender, pid);
                 }
             }
@@ -315,14 +328,7 @@ public class UIFrame extends javax.swing.JFrame {
             }
             String premium = (String)JOptionPane.showInputDialog(null,null,"Please choose a premium package to buy.",JOptionPane.PLAIN_MESSAGE,null,possibilities,pos.get(0));
             if (premium != null) {
-                PaymentInfo paymentInfo = null;
-                try {
-                    paymentInfo = userManager.viewPaymentInfo();
-                } catch (Exception e) {
-                    UIUpdater.error(e.getMessage());
-                    return;
-                }
-                userManager.buyPrem(premium, paymentInfo.getCardType(), paymentInfo.getCardNo(), paymentInfo.getAddress());
+                userManager.buyPrem(premium);
             }
         } else {
             UIUpdater.error("Not logged in.");
@@ -352,6 +358,16 @@ public class UIFrame extends javax.swing.JFrame {
             UIUpdater.error("Not logged in.");
         }
     }//GEN-LAST:event_cancelPremiumButtonActionPerformed
+
+    private void addPaymentInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPaymentInfoButtonActionPerformed
+        UserManager userManager = UserManager.getInstance();
+        String cardType = JOptionPane.showInputDialog("Please enter a card type for this user.");
+        String cardNo = JOptionPane.showInputDialog("Please enter a card number for this user.");
+        String cardAddress = JOptionPane.showInputDialog("Please enter an address for this user.");
+        if (cardType != null && cardNo != null && cardAddress != null) {
+            userManager.addPaymentInfo(cardType, cardNo, cardAddress);
+        }
+    }//GEN-LAST:event_addPaymentInfoButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -396,6 +412,7 @@ public class UIFrame extends javax.swing.JFrame {
     private javax.swing.JPanel RightPanel;
     private javax.swing.JScrollPane RightScroll;
     public javax.swing.JTextPane RightText;
+    public javax.swing.JButton addPaymentInfoButton;
     public javax.swing.JButton buyPremiumButton;
     public javax.swing.JButton cancelPremiumButton;
     public javax.swing.JLabel currentUserDynamicLabel;
