@@ -55,7 +55,7 @@ public class UserManager {
 					String s = "Name: " + match.getName() + "\n" + "uid: " + match.getCustomerId();
 					matches.add(s);
 				}
-				UIUpdater.login("Here are your matches!", matches);
+				UIUpdater.getMatches(matches);
 			} catch (SQLException e) {
 				UIUpdater.error("Failed at retrieving matches: "+ e.getMessage());
 			}
@@ -75,7 +75,7 @@ public class UserManager {
 					String s = "Sender: " + content.getSenderId() + "\n" + content.getMessage();
 					messages.add(s);
 				}
-				UIUpdater.login(Integer.toString(uid), messages);
+				UIUpdater.getMessages(messages);
 			} catch (SQLException e) {
 				UIUpdater.error("Failed at retrieving messages: " + e.getMessage());
 			}
