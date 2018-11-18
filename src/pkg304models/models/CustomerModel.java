@@ -10,6 +10,8 @@ import java.util.List;
 
 import pkg304data.Customer;
 import pkg304models.GenericModel;
+import pkg304models.ModelManager;
+import pkg304models.Table;
 
 public class CustomerModel extends GenericModel<Customer> {
 	public CustomerModel(Connection con) {
@@ -105,7 +107,13 @@ public class CustomerModel extends GenericModel<Customer> {
 		
 		String cmd = "INSERT INTO Customer (customerId, email, name, gender, isActive, personalityId) "
 				+ "VALUES (incr_customerId.nextval, ?, ?, ?, ?, ?)";
-		return execUpdateSQL(cmd, types, values);
+		int result1 = execUpdateSQL(cmd, types, values);
+		
+		// Create matches while we're at it
+		MatchModel m = (MatchModel) ModelManager.getInstance().getModel(Table.MATCH);
+		int cid = getIdFromEmail(email);
+		int result2 = m.createMatches(cid, pid, gender);
+		return result1 + result2;
 	}
 	
 	// Set isActive field of customer with a specific email address
