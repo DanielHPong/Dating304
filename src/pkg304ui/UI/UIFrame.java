@@ -255,17 +255,9 @@ public class UIFrame extends javax.swing.JFrame {
                     sendMessageTextField.setEnabled(true);
                     buyPremiumButton.setEnabled(true);
                     cancelPremiumButton.setEnabled(true);
-                } else {
-                    return;
                 }
-            } else {
-                return;
             }
         }
-        List matches = new ArrayList();
-        UserManager userManager = UserManager.getInstance();
-        userManager.getMatch(); // TODO - get result from midlayer
-        UIUpdater.login(userEmail, matches);
     }//GEN-LAST:event_PickUserButtonActionPerformed
 
     private void LogoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutButtonActionPerformed
@@ -290,8 +282,6 @@ public class UIFrame extends javax.swing.JFrame {
             if (matchesDropdown.getSelectedItem() != null) {
                 String otherUser = (String)matchesDropdown.getSelectedItem();
                 userManager.getMessage(otherUser);
-                List messages = new ArrayList();
-                UIUpdater.getMessages(messages);
             } else {
                 UIUpdater.error("No user selected.");
             }

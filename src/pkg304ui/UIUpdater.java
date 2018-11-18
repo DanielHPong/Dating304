@@ -22,7 +22,8 @@ public class UIUpdater {
         // UIMain.UI.matchesDropdown.setSelectedIndex(0);
         UIMain.UI.matchesDropdown.removeAllItems();
         for (Object match : matches) {
-            UIMain.UI.matchesDropdown.addItem((String)match);
+            String[] mat = ((String) match).split("\n");
+            UIMain.UI.matchesDropdown.addItem(mat[1].substring(5));
         }
         return true;
     }
@@ -30,7 +31,16 @@ public class UIUpdater {
     public static boolean getMessages(List messages) {
         String output = "";
         for (Object message : messages) {
-            // TODO - Parse the message object and add it to the output
+            output += message + "\n\n";
+        }
+        setText(output);
+        return true;
+    }
+    
+    public static boolean getMatches(List matches) {
+        String output = "";
+        for (Object match : matches) {
+            output += match + "\n\n";
         }
         setText(output);
         return true;
