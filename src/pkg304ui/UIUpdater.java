@@ -16,7 +16,7 @@ import pkg304data.PaymentInfo;
 public class UIUpdater {
     
     public static void error(String error) {
-        UIMain.UI.errorDynamicLabel.setText("Error: "+error);
+        UIMain.UI.errorTextArea.setText("Error: "+error);
     }
     
     public static boolean login(String user, List matches) {
