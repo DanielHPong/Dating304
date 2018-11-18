@@ -19,7 +19,7 @@ public class PremiumCustomerModel extends GenericModel<PremiumCustomer> {
 
 	@Override
 	public List<PremiumCustomer> getAll() throws SQLException {
-		ResultSet rs = execQuerySQL("SELECT * FROM PremiumCustomer");
+		ResultSet rs = execQuerySQL("SELECT * FROM Premium_Customer");
 		List<PremiumCustomer> result = new ArrayList<PremiumCustomer>();
 		while (rs.next()) {
 			int customerId = rs.getInt("customerId");
@@ -30,6 +30,20 @@ public class PremiumCustomerModel extends GenericModel<PremiumCustomer> {
 		return result;
 	}
 	
+	// Get all benefits that a premium user has by Id
+	public List<String> getBenefitsById(int customerId) throws SQLException {
+		List<Integer> types = new ArrayList<Integer>();
+		List<Object> values = new ArrayList<Object>();
+		types.add(Types.INTEGER);
+		values.add(customerId);
+		ResultSet rs = execQuerySQL("SELECT bName FROM Customer_Bname WHERE customerId = ?");
+		List<String> result = new ArrayList<String>();
+		while (rs.next()) {
+			result.add(rs.getString("bName"));
+		}
+		return result;
+	}
+		
 	// Create a PremiumCustomer row based on customerId and infoId
 	public int createPremiumCustomer(int customerId, int infoId) throws SQLException {
 		List<Integer> types = new ArrayList<Integer>();
