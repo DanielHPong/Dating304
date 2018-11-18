@@ -96,12 +96,18 @@ public class UserManager {
 		}
 	}
 	
-	public void buyPrem(String type, String cardType, String cardNo, String address) {
-		//TODO
+	public void buyPrem(String pName) {
 		if (!LoginMan.isLoggedOn()) {
 			UIUpdater.error("Error: You are not logged in.");
 		} else {
 			int uid = LoginMan.getUID();
+			try {
+				PremiumPackageModel pModel = (PremiumPackageModel) modelMan.getModel(Table.PREMIUM_PACKAGE);
+				pModel.createPurchase(uid, pName);
+				UIUpdater.setText("You can now enjoy our premium benefits!");
+			} catch (Exception e) {
+				UIUpdater.error("Failed to buy premium: " + e.getMessage());
+			}
 		}
 	}
 	
@@ -149,7 +155,28 @@ public class UserManager {
 		}
 	}
 	
-	public void getImage() {
+	public ArrayList<String> getImage() {
+                ArrayList<String> images = new ArrayList();
+		if (!LoginMan.isLoggedOn()) {
+			UIUpdater.error("Error: You are not logged in.");
+                        return images;
+		} else {
+			int uid = LoginMan.getUID();
+			List<Image> imgs;
+			try {
+				imgs = iModel.getUserImage(uid);
+				for (Image img : imgs) {
+					images.add(img.getUrl());
+				}
+				return images;
+			} catch (SQLException e) {
+				UIUpdater.error("Failed to retrieve images: " + e.getMessage());
+                                return images;
+			}
+		}
+	}
+        
+        public void viewImage() {
 		if (!LoginMan.isLoggedOn()) {
 			UIUpdater.error("Error: You are not logged in.");
 		} else {
@@ -168,18 +195,99 @@ public class UserManager {
 		}
 	}
 	
-	public void viewPaymentInfo() {
-		// TODO
+	// Creates PaymentInfo table for this user
+	public void addPaymentInfo(String cardType, String cardNo, String address) {
 		if (!LoginMan.isLoggedOn()) {
 			UIUpdater.error("Error: You are not logged in.");
 		} else {
 			int uid = LoginMan.getUID();
+			try {
+				PaymentInfoModel pModel = (PaymentInfoModel) modelMan.getModel(Table.PAYMENT_INFO);
+				pModel.createPaymentInfo(uid, cardType, cardNo, address);
+				UIUpdater.setText("Your payment info has been created!");
+			} catch (SQLException e) {
+				UIUpdater.error("Failed creating paymentInfo: " + e.getMessage());
+			}
 		}
 	}
 	
-	public void myPremiums() {
-		// TODO
-		// Return all premium this user has
+	// Deletes paymentInfo table 
+	public void deletePaymentInfo() {
+		if (!LoginMan.isLoggedOn()) {
+			UIUpdater.error("Error: You are not logged in.");
+		} else {
+			int uid = LoginMan.getUID();
+			try {
+				PaymentInfoModel pModel = (PaymentInfoModel) modelMan.getModel(Table.PAYMENT_INFO);
+				pModel.deletePaymentInfo(uid);
+				UIUpdater.setText("Your payment info has been deleted!");
+			} catch (SQLException e) {
+				UIUpdater.error("Failed deleting paymentInfo: " + e.getMessage());
+			}
+		}
+	}
+	
+	// Returns PaymentInfo object for this user.
+	public PaymentInfo viewPaymentInfo() throws Exception{
+		if (!LoginMan.isLoggedOn()) {
+			UIUpdater.error("Error: You are not logged in.");
+			throw new Exception("You are not logged in!");
+		}
+		int uid = LoginMan.getUID();
+		PaymentInfo pInfo = null;
+		try {
+			PaymentInfoModel pModel = (PaymentInfoModel) modelMan.getModel(Table.PAYMENT_INFO);
+			pInfo = pModel.getPaymentInfoById(uid);
+		} catch (SQLException e) {
+			UIUpdater.error("Failed to retrieve payment info: " + e.getMessage());
+			throw new Exception(e.getMessage());
+		}
+		
+		return pInfo;
+	}
+	
+	// Returns List of PremiumPackage object for this user.
+	public List<PremiumPackage> myPremiums() throws Exception{
+		if (!LoginMan.isLoggedOn()) {
+			UIUpdater.error("Error: you are not logged in.");
+			throw new Exception("You are not logged in!");
+		}
+		int uid = LoginMan.getUID();
+		List<PremiumPackage> packages;
+		try {
+			PremiumPackageModel pModel = (PremiumPackageModel) modelMan.getModel(Table.PREMIUM_PACKAGE);
+			packages = pModel.getPremByID(uid);
+		} catch (SQLException e) {
+			UIUpdater.error("Failed to get premium package: " + e.getMessage());
+			throw new Exception("Failed to get premium package.");
+		}
+		
+		return packages;
+	}
+	
+	// Displays # broken matches per personality type for this user.
+	public void getBrokenMatchesByType() {
+		if (!LoginMan.isLoggedOn()) {
+			UIUpdater.error("Error: you are not logged in.");
+		} else {
+			int uid = LoginMan.getUID();
+			List<Object> res;
+			List<String> toDisplay = new ArrayList();
+			try {
+				MatchModel mModel = (MatchModel) modelMan.getModel(Table.MATCH);
+				res = mModel.getPersonalityToBrokenMatchCount(uid);
+				int n = res.size()/2;
+				for (int i = 0; i < n; i++) {
+					int i1 = i * 2;
+					int i2 = i1 + 1;
+					String s = "Type: " + res.get(i1) + "    " + "# of Broken Hearts: " + res.get(i2);
+					toDisplay.add(s);
+				}
+				UIUpdater.getMessages(toDisplay);
+			} catch (SQLException e) {
+				UIUpdater.error("Failed to display broken hearts: " + e.getMessage());
+			}
+		}
 	}
 	
 	

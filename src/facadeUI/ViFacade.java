@@ -1,4 +1,7 @@
 package facadeUI;
+import java.util.List;
+
+import pkg304data.*;
 
 public class ViFacade implements DaFacade {
 	private LogInManager LogInMan;
@@ -37,8 +40,8 @@ public class ViFacade implements DaFacade {
 	}
 
 	@Override
-	public void buyPrem(String type, String cardType, String cardNo, String address) {
-		UserMan.buyPrem(type, cardType, cardNo, address);
+	public void buyPrem(String pName) {
+		UserMan.buyPrem(pName);
 	}
 
 	@Override
@@ -62,8 +65,8 @@ public class ViFacade implements DaFacade {
 	}
 
 	@Override
-	public void signUp(String email, String name, int pID) {
-		LogInMan.signUp(email, name, pID);
+	public void signUp(String email, String name, String gender, int pID) {
+		LogInMan.signUp(email, name, gender, pID);
 	}
 
 	@Override
@@ -72,8 +75,18 @@ public class ViFacade implements DaFacade {
 	}
 
 	@Override
-	public void viewPaymentInfo() {
-		UserMan.viewPaymentInfo();
+	public PaymentInfo viewPaymentInfo() throws Exception {
+		return UserMan.viewPaymentInfo();
+	}
+	
+	@Override
+	public void addPaymentInfo(String cardType, String cardNo, String address) {
+		UserMan.addPaymentInfo(cardType, cardNo, address);
+	}
+	
+	@Override
+	public void deletePaymentInfo() {
+		UserMan.deletePaymentInfo();
 	}
 
 	@Override
@@ -88,14 +101,14 @@ public class ViFacade implements DaFacade {
 	
 	@Override
 	// Display all available premium options
-	public void viewPrem() {
-		viewer.viewPrem();
+	public List<PremiumPackage> viewPrem() throws Exception{
+		return viewer.viewPrem();
 	}
 	
 	@Override
 	// Display all premium this user has
-	public void myPremiums() {
-		UserMan.myPremiums();
+	public List<PremiumPackage> myPremiums() throws Exception{
+		return UserMan.myPremiums();
 	}
 
 

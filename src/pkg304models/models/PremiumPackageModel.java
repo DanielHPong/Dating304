@@ -49,6 +49,23 @@ public class PremiumPackageModel extends GenericModel<PremiumPackage> {
 		return result;
 	}
 	
+	// Get all premium packages for a user
+	public List<PremiumPackage> getPremByID(int customerId) throws SQLException {
+		List<Integer> types = new ArrayList<Integer>();
+		List<Object> values = new ArrayList<Object>();
+		types.add(Types.INTEGER);
+		values.add(customerId);
+		ResultSet rs = execQuerySQL("SELECT pName, price FROM Purchase JOIN Premium_Package ON pName = packageName AND customerId = ?");
+		List<PremiumPackage> result = new ArrayList();
+		while (rs.next()) {
+			String pName = rs.getString("pName");
+			float price = rs.getFloat("price");
+			PremiumPackage pack = new PremiumPackage(pName, price);
+			result.add(pack);
+		}
+		return result;
+	}
+	
 	// A user buys a package
 	public int createPurchase(int customerId, String packageName) throws SQLException {
 		PaymentInfoModel pModel = (PaymentInfoModel) ModelManager.getInstance().getModel(Table.PAYMENT_INFO);

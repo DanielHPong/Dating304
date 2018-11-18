@@ -5,7 +5,9 @@
  */
 package pkg304ui;
 
+import facadeUI.UserManager;
 import java.util.List;
+import pkg304data.PaymentInfo;
 
 /**
  *
@@ -18,6 +20,7 @@ public class UIUpdater {
     }
     
     public static boolean login(String user, List matches) {
+        UserManager userManager = UserManager.getInstance();
         UIMain.UI.currentUserDynamicLabel.setText(user);
         // UIMain.UI.matchesDropdown.setSelectedIndex(0);
         UIMain.UI.matchesDropdown.removeAllItems();
@@ -25,6 +28,44 @@ public class UIUpdater {
             String[] mat = ((String) match).split("\n");
             UIMain.UI.matchesDropdown.addItem(mat[1].substring(5));
         }
+        UIMain.UI.LogoutButton.setEnabled(true);
+        UIMain.UI.getMessagesButton.setEnabled(true);
+        UIMain.UI.sendMessageButton.setEnabled(true);
+        UIMain.UI.sendMessageTextField.setEnabled(true);
+        try {
+            if (userManager.viewPaymentInfo() != null) {
+                UIMain.UI.buyPremiumButton.setEnabled(true);
+                UIMain.UI.cancelPremiumButton.setEnabled(true);
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        PaymentInfo paymentInfo = null;
+        try {
+            paymentInfo = userManager.viewPaymentInfo();
+        } catch (Exception e) {
+            return false;
+        }
+        if (paymentInfo == null) {
+            UIMain.UI.addPaymentInfoButton.setEnabled(true);
+        }
+        UIMain.UI.getImageButton.setEnabled(true);
+        UIMain.UI.uploadImageButton.setEnabled(true);
+        return true;
+    }
+    
+    public static boolean logout() {
+        UIMain.UI.currentUserDynamicLabel.setText("");
+        UIMain.UI.matchesDropdown.removeAllItems();
+        UIMain.UI.LogoutButton.setEnabled(false);
+        UIMain.UI.getMessagesButton.setEnabled(false);
+        UIMain.UI.sendMessageButton.setEnabled(false);
+        UIMain.UI.sendMessageTextField.setEnabled(false);
+        UIMain.UI.buyPremiumButton.setEnabled(false);
+        UIMain.UI.cancelPremiumButton.setEnabled(false);
+        UIMain.UI.addPaymentInfoButton.setEnabled(false);
+        UIMain.UI.getImageButton.setEnabled(false);
+        UIMain.UI.uploadImageButton.setEnabled(false);
         return true;
     }
     
