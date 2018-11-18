@@ -80,7 +80,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="currentUserStaticLabel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="currentUserDynamicLabel" pref="214" max="32767" attributes="0"/>
+                                  <Component id="currentUserDynamicLabel" pref="193" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Component id="matchesStaticLabel" min="-2" max="-2" attributes="0"/>
@@ -107,6 +107,7 @@
                               </Group>
                           </Group>
                       </Group>
+                      <Component id="addPaymentInfoButton" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -139,7 +140,9 @@
                       <Component id="buyPremiumButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cancelPremiumButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="571" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="addPaymentInfoButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="541" max="32767" attributes="0"/>
                   <Component id="errorDynamicLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -157,6 +160,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="currentUserStaticLabel">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="14" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Current User: "/>
           </Properties>
         </Component>
@@ -252,6 +258,17 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelPremiumButtonActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="addPaymentInfoButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Add Payment Info"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addPaymentInfoButtonActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
