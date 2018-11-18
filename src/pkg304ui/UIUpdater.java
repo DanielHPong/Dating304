@@ -43,6 +43,8 @@ public class UIUpdater {
         if (paymentInfo == null) {
             UIMain.UI.addPaymentInfoButton.setEnabled(true);
         }
+        UIMain.UI.getImageButton.setEnabled(true);
+        UIMain.UI.uploadImageButton.setEnabled(true);
         return true;
     }
     
@@ -56,6 +58,8 @@ public class UIUpdater {
         UIMain.UI.buyPremiumButton.setEnabled(false);
         UIMain.UI.cancelPremiumButton.setEnabled(false);
         UIMain.UI.addPaymentInfoButton.setEnabled(false);
+        UIMain.UI.getImageButton.setEnabled(false);
+        UIMain.UI.uploadImageButton.setEnabled(false);
         return true;
     }
     

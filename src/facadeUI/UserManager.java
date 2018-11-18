@@ -155,7 +155,28 @@ public class UserManager {
 		}
 	}
 	
-	public void getImage() {
+	public ArrayList<String> getImage() {
+                ArrayList<String> images = new ArrayList();
+		if (!LoginMan.isLoggedOn()) {
+			UIUpdater.error("Error: You are not logged in.");
+                        return images;
+		} else {
+			int uid = LoginMan.getUID();
+			List<Image> imgs;
+			try {
+				imgs = iModel.getUserImage(uid);
+				for (Image img : imgs) {
+					images.add(img.getUrl());
+				}
+				return images;
+			} catch (SQLException e) {
+				UIUpdater.error("Failed to retrieve images: " + e.getMessage());
+                                return images;
+			}
+		}
+	}
+        
+        public void viewImage() {
 		if (!LoginMan.isLoggedOn()) {
 			UIUpdater.error("Error: You are not logged in.");
 		} else {
