@@ -212,11 +212,18 @@ public class UIFrame extends javax.swing.JFrame {
             int createNew = JOptionPane.showConfirmDialog(null, "This user doesn't exist. Do you want to create an account for this user?");
             if (createNew == JOptionPane.YES_OPTION) {
                 String userName = JOptionPane.showInputDialog("Please enter a name for this user.");
-                logInManager.signUp(userEmail, userName);
-                LogoutButton.setEnabled(true);
-                getMessagesButton.setEnabled(true);
-                sendMessageButton.setEnabled(true);
-                sendMessageTextField.setEnabled(true);
+                Object[] possibilities = {"1", "2", "3", "4"};
+                String personality = (String)JOptionPane.showInputDialog(null,null,"Please choose a personality type.",JOptionPane.PLAIN_MESSAGE,null,possibilities,"1");
+                if (personality != null) {
+                    int pid = Integer.parseInt(personality);
+                    logInManager.signUp(userEmail, userName, pid);
+                    LogoutButton.setEnabled(true);
+                    getMessagesButton.setEnabled(true);
+                    sendMessageButton.setEnabled(true);
+                    sendMessageTextField.setEnabled(true);
+                } else {
+                    return;
+                }
             } else {
                 return;
             }
@@ -236,7 +243,7 @@ public class UIFrame extends javax.swing.JFrame {
             sendMessageButton.setEnabled(false);
             sendMessageTextField.setEnabled(false);
         } else {
-            UIUpdater.error("Cannot log out. Not logged in.");
+            UIUpdater.error("Not logged in.");
         }
     }//GEN-LAST:event_LogoutButtonActionPerformed
 

@@ -38,7 +38,7 @@ public class LogInManager {
 	}
 
 	// SignUp Method
-	public void signUp(String email, String name) {
+	public void signUp(String email, String name, int pid) {
 		// TODO
 		if (isLoggedOn) {
 			// Error: please logout before you sign up
