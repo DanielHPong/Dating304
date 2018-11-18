@@ -37,8 +37,8 @@ public class ViFacade implements DaFacade {
 	}
 
 	@Override
-	public void buyPrem(String type) {
-		UserMan.buyPrem(type);
+	public void buyPrem(String type, String cardType, String cardNo, String address) {
+		UserMan.buyPrem(type, cardType, cardNo, address);
 	}
 
 	@Override
@@ -54,6 +54,11 @@ public class ViFacade implements DaFacade {
 	@Override
 	public void deleteImage(String url) {
 		UserMan.deleteImage(url);
+	}
+	
+	@Override
+	public void getImage() {
+		UserMan.getImage();
 	}
 
 	@Override
