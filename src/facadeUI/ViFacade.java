@@ -78,6 +78,16 @@ public class ViFacade implements DaFacade {
 	public PaymentInfo viewPaymentInfo() throws Exception {
 		return UserMan.viewPaymentInfo();
 	}
+	
+	@Override
+	public void addPaymentInfo(String cardType, String cardNo, String address) {
+		UserMan.addPaymentInfo(cardType, cardNo, address);
+	}
+	
+	@Override
+	public void deletePaymentInfo() {
+		UserMan.deletePaymentInfo();
+	}
 
 	@Override
 	public void showUserStats() {
