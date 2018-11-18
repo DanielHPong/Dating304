@@ -36,7 +36,13 @@ public class Viewer {
 	}
 	
 	public void showBuyRecords() {
-		// TODO
+		try {
+			PurchaseModel pModel = (PurchaseModel) modelMan.getModel(Table.PURCHASE);
+			List<String> toDisplay = pModel.getLedger();
+			UIUpdater.getMessages(toDisplay);
+		} catch (SQLException e) {
+			UIUpdater.error("Failed retrieving purchase records: " + e.getMessage());
+		}
 	}
 	
 	// Returns all available premium packages
