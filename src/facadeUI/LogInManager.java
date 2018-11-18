@@ -71,7 +71,7 @@ public class LogInManager {
 	}
 
 	// SignUp Method
-	public void signUp(String email, String name, int pID) {
+	public void signUp(String email, String name, int pid) {
 		if (isLoggedOn) {
 			UIUpdater.error("Please logout before signing up!");
 		} else {
