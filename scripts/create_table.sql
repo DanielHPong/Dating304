@@ -8,11 +8,14 @@ drop table premium_customer cascade constraints;
 drop table payment_info cascade constraints;
 drop table premium_package cascade constraints;
 drop table purchase cascade constraints;
-drop table benefits cascade constraints;
+drop table benefit cascade constraints;
 drop table premium_to_benefit cascade constraints;
+drop view customer_bname;
 drop sequence ora_d4m0b.incr_pId;
 drop sequence ora_d4m0b.incr_customerId;
 drop sequence ora_d4m0b.incr_chatId;
+drop sequence ora_d4m0b.incr_infoId;
+
 
 
 create sequence incr_pId
@@ -29,7 +32,12 @@ create sequence incr_chatId
 	start with 1
 	increment by 1
 	cache 10;
-	
+
+create sequence incr_infoId
+	start with 1
+	increment by 1
+	cache 10;
+
 create table personality
     (pId integer,
     type char (50),
@@ -85,12 +93,18 @@ create table payment_info
     address char(255) not null,
     primary key (infoId));
 
+create table payment_info_card_type
+	(cardNo char(50),
+	cardType char(50) not null,
+	primary key (cardNo),
+	foreign key (cardNo) references payment_info on delete cascade);
+
 create table premium_customer
     (customerId integer,
     infoId integer,
     primary key (customerId),
-    foreign key (customerId) references customer,
-    foreign key (infoId) references payment_info);
+    foreign key (customerId) references customer on delete cascade,
+    foreign key (infoId) references payment_info on delete cascade);
 
 create table premium_package
     (pName char(50),
@@ -107,7 +121,7 @@ create table purchase
     foreign key (infoId) references payment_info on delete cascade,
     foreign key (packageName) references premium_package on delete cascade);
 
-create table benefits 
+create table benefit
     (bName char(50),
     bInfo char(255) not null,
     primary key (bName));
@@ -119,8 +133,13 @@ create table premium_to_benefit
     foreign key (pName) references premium_package on delete cascade,
     foreign key (bName) references benefits on delete cascade);
 
-
+create view customer_bname as
+	select customerId, bname
+	from purchase join premium_to_benefit
+	on packageName = pName;
     
+	
+	
 insert into personality (pId, type) values
 	(incr_pId.nextval, 'Introverted');
 insert into personality (pId, type) values
@@ -206,3 +225,51 @@ insert into content (chatId, senderId, receiverId, message, time) values
 	(incr_chatId.nextval, 7, 5, 'Wanna hang out?', timestamp '2018-11-17 12:34:56');
 insert into content (chatId, senderId, receiverId, message, time) values
 	(incr_chatId.nextval, 5, 7, 'Nah I need to do 304', timestamp '2018-11-17 12:35:56');
+
+insert into payment_info (infoId, cardNo, address) values
+	(incr_infoId.nextval, '2929-2929-2929-2929', '1111 Best Avenue, BC');
+insert into payment_info (infoId, cardNo, address) values
+	(incr_infoId.nextval, '7777-7777-7777-7777', '2222 Absolute Best Avenue, BC');
+
+insert into payment_info_card_type (cardNo, cardType) values
+	('2929-2929-2929-2929', 'Visa');
+insert into payment_info_card_type (cardNo, cardType) values
+	('7777-7777-7777-7777', 'MasterCard');
+
+insert into premium_customer (customerId, infoId) values
+	(2, 2);
+insert into premium_customer (customerId, infoId) values
+	(6, 3);
+
+insert into premium_package (pName, price) values
+	('Gold Plan', 9.99);
+insert into premium_package (pName, price) values
+	('Silver Plan', 4.99);
+insert into premium_package (pName, price) values
+	('Bronze Plan', 0.99);
+
+insert into purchase (customerId, infoId, packageName, purchaseTime) values
+	(2, 2, 'Gold Plan', timestamp '2018-11-17 12:33:56');
+insert into purchase (customerId, infoId, packageName, purchaseTime) values
+	(6, 3, 'Bronze Plan', timestamp '2018-11-17 12:33:56');
+
+insert into benefit (bName, bInfo) values
+	('Extra Visibility', 'User profile display is prioritized.');
+insert into benefit (bName, bInfo) values
+	('Extended Matching', 'User can get matched to all users whose personality compatibility is higher than relative minimum.');
+insert into benefit (bName, bInfo) values
+	('Beta Testing', 'User gets to try out the newest features.');
+
+insert into premium_to_benefit (pName, bName) values
+	('Gold Plan', 'Extra Visibility');
+insert into premium_to_benefit (pName, bName) values
+	('Gold Plan', 'Extended Matching');
+insert into premium_to_benefit (pName, bName) values
+	('Gold Plan', 'Beta Testing');
+insert into premium_to_benefit (pName, bName) values
+	('Silver Plan', 'Extra Visibility');
+insert into premium_to_benefit (pName, bName) values
+	('Silver Plan', 'Extended Matching');
+insert into premium_to_benefit (pName, bName) values
+	('Bronze Plan', 'Extra Visibility');
+
