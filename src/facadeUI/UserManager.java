@@ -97,13 +97,17 @@ public class UserManager {
 	}
 	
 	public void buyPrem(String pName) {
-		//TODO
 		if (!LoginMan.isLoggedOn()) {
 			UIUpdater.error("Error: You are not logged in.");
 		} else {
 			int uid = LoginMan.getUID();
-			// 1. retrieve paymentinfo
-			// 2. make purchase after
+			try {
+				PremiumPackageModel pModel = (PremiumPackageModel) modelMan.getModel(Table.PREMIUM_PACKAGE);
+				pModel.createPurchase(uid, pName);
+				UIUpdater.setText("You can now enjoy our premium benefits!");
+			} catch (Exception e) {
+				UIUpdater.error("Failed to buy premium: " + e.getMessage());
+			}
 		}
 	}
 	
@@ -170,18 +174,42 @@ public class UserManager {
 		}
 	}
 	
-	public void viewPaymentInfo() {
-		// TODO
+	// Returns PaymentInfo object for this user.
+	public PaymentInfo viewPaymentInfo() throws Exception{
 		if (!LoginMan.isLoggedOn()) {
 			UIUpdater.error("Error: You are not logged in.");
-		} else {
-			int uid = LoginMan.getUID();
+			throw new Exception("You are not logged in!");
 		}
+		int uid = LoginMan.getUID();
+		PaymentInfo pInfo;
+		try {
+			PaymentInfoModel pModel = (PaymentInfoModel) modelMan.getModel(Table.PAYMENT_INFO);
+			pInfo = pModel.getPaymentInfoById(uid);
+		} catch (SQLException e) {
+			UIUpdater.error("Failed to retrieve payment info: " + e.getMessage());
+			throw new Exception(e.getMessage());
+		}
+		
+		return pInfo;
 	}
 	
-	public void myPremiums() {
-		// TODO
-		// Return all premium this user has
+	// Returns List of PremiumPackage object for this user.
+	public List<PremiumPackage> myPremiums() throws Exception{
+		if (!LoginMan.isLoggedOn()) {
+			UIUpdater.error("Error: you are not logged in.");
+			throw new Exception("You are not logged in!");
+		}
+		int uid = LoginMan.getUID();
+		List<PremiumPackage> packages;
+		try {
+			PremiumPackageModel pModel = (PremiumPackageModel) modelMan.getModel(Table.PREMIUM_PACKAGE);
+			packages = pModel.getPremByID(uid);
+		} catch (SQLException e) {
+			UIUpdater.error("Failed to get premium package: " + e.getMessage());
+			throw new Exception("Failed to get premium package.");
+		}
+		
+		return packages;
 	}
 	
 	
