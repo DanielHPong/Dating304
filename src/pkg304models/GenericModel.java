@@ -28,9 +28,9 @@ public abstract class GenericModel<T> {
 		int rowCount = ps.executeUpdate();
 		this.con.commit();
 		ps.close();
-		if (rowCount == 0) {
-			throw new SQLException("error: no resource was updated");
-		}
+		//if (rowCount == 0) {
+		//	throw new SQLException("error: no resource was updated");
+		//}
 		return rowCount;
 	}
 	

@@ -92,7 +92,7 @@ create table payment_info
     (infoId integer,
     cardNo char(50) not null,
     address char(255) not null,
-    primary key (infoId)
+    primary key (infoId),
     unique (cardNo));
 
 create table payment_info_card_type
@@ -152,6 +152,8 @@ insert into personality (pId, type) values
 	(incr_pId.nextval, 'Party Animal');
 
 insert into personality_match (p1Id, p2Id, rank) values
+	(2, 2, 4);
+insert into personality_match (p1Id, p2Id, rank) values
 	(2, 3, 1);
 insert into personality_match (p1Id, p2Id, rank) values
 	(2, 4, 2);
@@ -159,6 +161,8 @@ insert into personality_match (p1Id, p2Id, rank) values
 	(2, 5, 3);
 insert into personality_match (p1Id, p2Id, rank) values
 	(3, 2, 1);
+insert into personality_match (p1Id, p2Id, rank) values
+	(3, 3, 4);
 insert into personality_match (p1Id, p2Id, rank) values
 	(3, 4, 3);
 insert into personality_match (p1Id, p2Id, rank) values
@@ -168,6 +172,8 @@ insert into personality_match (p1Id, p2Id, rank) values
 insert into personality_match (p1Id, p2Id, rank) values
 	(4, 3, 3);
 insert into personality_match (p1Id, p2Id, rank) values
+	(4, 4, 4);
+insert into personality_match (p1Id, p2Id, rank) values
 	(4, 5, 1);
 insert into personality_match (p1Id, p2Id, rank) values
 	(5, 2, 3);
@@ -175,6 +181,8 @@ insert into personality_match (p1Id, p2Id, rank) values
 	(5, 3, 2);
 insert into personality_match (p1Id, p2Id, rank) values
 	(5, 4, 1);
+insert into personality_match (p1Id, p2Id, rank) values
+	(5, 5, 4);
 
 insert into customer (customerId, email, name, gender, isActive, personalityId) values
 	(incr_customerId.nextval, 'yoo@naver.com', 'Jason Yoo', 'M', '1', 2);

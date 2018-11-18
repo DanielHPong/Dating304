@@ -53,8 +53,7 @@ public class MatchModel extends GenericModel<Match> {
 		
 		List<Object> result = new ArrayList<Object>();
 		if (rs.next()) {
-			result.add(rs.getString("type"));
-			result.add(rs.getInt("COUNT(*)"));
+			result.add(rs.getString("type") + ": " + rs.getInt("COUNT(*)"));
 		}
 		return result;
 	}
@@ -65,8 +64,8 @@ public class MatchModel extends GenericModel<Match> {
 		List<Integer> types = new ArrayList<Integer>();
 		List<Object> values = new ArrayList<Object>();
 		types.addAll(Arrays.asList(Types.INTEGER, Types.CHAR, Types.INTEGER));
-		values.addAll(Arrays.asList((Object) cId, (Object) gender, (Object) pId));
-		
+		values.addAll(Arrays.asList(cId, gender, pId));
+		System.out.println("CHECK3.5 - cId" + cId + ", pid: " + pId + ", gender: " + gender);
 		String cmd = "INSERT INTO Match (customer1Id, customer2Id, c1Active, c2Active)"
 				+ " SELECT ?, customerId, '1', '1'"
 				+ " FROM Customer"
@@ -74,7 +73,7 @@ public class MatchModel extends GenericModel<Match> {
 				+ " (SELECT p2Id FROM Personality_Match WHERE p1Id = ? AND rank < 3)";
 		return execUpdateSQL(cmd, types, values);
 	}
-	
+		
 	// Deactivates a match given c1Id and c2Id (marked disabled by c1)
 	public int deactivateMatch(int c1Id, int c2Id) throws SQLException {	
 		List<Integer> types = new ArrayList<Integer>();
@@ -82,9 +81,9 @@ public class MatchModel extends GenericModel<Match> {
 		types.addAll(Arrays.asList(Types.INTEGER, Types.INTEGER));
 		values.addAll(Arrays.asList((Object) c1Id, (Object) c2Id));
 		
-		String cmd1 = "UPDATE Match SET c1Active = 0 WHERE customer1Id = ? AND customer2Id = ?";
+		String cmd1 = "UPDATE Match SET c1Active = '0' WHERE customer1Id = ? AND customer2Id = ?";
 		int res1 = execUpdateSQL(cmd1, types, values);
-		String cmd2 = "UPDATE Match SET c2Active = 0 WHERE customer2Id = ? AND customer1Id = ?";
+		String cmd2 = "UPDATE Match SET c2Active = '0' WHERE customer2Id = ? AND customer1Id = ?";
 		int res2 = execUpdateSQL(cmd2, types, values);
 		
 		return res1 + res2;
