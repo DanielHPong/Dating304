@@ -16,7 +16,6 @@ public class CustomerModel extends GenericModel<Customer> {
 		super(con);
 	}
 
-	// Get all users
 	@Override
 	public List<Customer> getAll() throws SQLException {
 		ResultSet rs = execQuerySQL("SELECT * FROM Customer");
@@ -26,10 +25,33 @@ public class CustomerModel extends GenericModel<Customer> {
 			int pid = rs.getInt("personalityId");
 			String email = rs.getString("email");
 			String name = rs.getString("name");
+			String gender = rs.getString("gender");
 			boolean isActive = rs.getBoolean("isActive");
-			Customer row = new Customer(cid, email, name, isActive, pid);
+			Customer row = new Customer(cid, email, name, gender, isActive, pid);
 			result.add(row);
 		}
+		return result;
+	}
+	
+	// Returns customer row by his/her customerId
+	public List<Customer> getCustomerInfoById(int cId) throws SQLException {
+		List<Integer> types = new ArrayList<Integer>();
+		List<Object> values = new ArrayList<Object>();
+		types.add(Types.INTEGER);
+		values.add((Object) cId);
+		
+		String cmd = "SELECT * FROM Customer WHERE customerId = ?";
+		ResultSet rs = execQuerySQL(cmd, types, values);
+		if (!rs.next()) {
+			throw new SQLException("error: customer with cId - " + cId + " does not exist in the database");
+		}
+		List<Customer> result = new ArrayList<Customer>();
+		String email = rs.getString("email");
+		String name = rs.getString("name");
+		String gender = rs.getString("gender");
+		boolean isActive = rs.getBoolean("isActive");
+		int pId = rs.getInt("personalityId");
+		result.add(new Customer(cId, email, name, gender, isActive, pId));
 		return result;
 	}
 	
@@ -41,11 +63,7 @@ public class CustomerModel extends GenericModel<Customer> {
 		values.add((Object) email);
 		
 		String cmd = "SELECT customerId FROM Customer WHERE email = cast(? as char(50))";
-		ResultSet rs = execQuerySQL(
-		 	cmd,
-			types,
-			values
-		);
+		ResultSet rs = execQuerySQL(cmd, types, values);
 		if (!rs.next()) {
 			throw new SQLException("error: email - " + email + " does not exist in the database");
 		}
@@ -70,24 +88,24 @@ public class CustomerModel extends GenericModel<Customer> {
 			int pid = rs.getInt("personalityId");
 			String email = rs.getString("email");
 			String name = rs.getString("name");
+			String gender = rs.getString("gender");
 			boolean isActive = rs.getBoolean("isActive");
-			Customer row = new Customer(cid, email, name, isActive, pid);
+			Customer row = new Customer(cid, email, name, gender, isActive, pid);
 			result.add(row);
 		}
 		return result;
 	}
 	
 	// Insert a customer row into database
-	public int createCustomer(String email, String name, int pid) throws SQLException {
+	public int createCustomer(String email, String name, String gender, int pid) throws SQLException {
 		List<Integer> types = new ArrayList<Integer>();
 		List<Object> values = new ArrayList<Object>();
-		types.addAll(Arrays.asList(Types.CHAR, Types.CHAR, Types.CHAR, Types.INTEGER));
-		values.addAll(Arrays.asList((Object) email, (Object) name, (Object) "1", (Object) pid));
-		return execUpdateSQL(
-			"INSERT INTO Customer (customerId, email, name, isActive, personalityId) VALUES (incr_customerId.nextval, ?, ?, ?, ?)",
-			types,
-			values
-		);
+		types.addAll(Arrays.asList(Types.CHAR, Types.CHAR, Types.CHAR, Types.CHAR, Types.INTEGER));
+		values.addAll(Arrays.asList((Object) email, (Object) name, (Object) gender, (Object) "1", (Object) pid));
+		
+		String cmd = "INSERT INTO Customer (customerId, email, name, gender, isActive, personalityId) "
+				+ "VALUES (incr_customerId.nextval, ?, ?, ?, ?, ?)";
+		return execUpdateSQL(cmd, types, values);
 	}
 	
 	// Set isActive field of customer with their uid

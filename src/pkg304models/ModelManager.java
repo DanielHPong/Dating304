@@ -2,10 +2,8 @@ package pkg304models;
 
 import java.sql.*;
 
-import pkg304data.Customer;
-import pkg304data.Personality;
-import pkg304models.models.CustomerModel;
-import pkg304models.models.PersonalityModel;
+import pkg304data.*;
+import pkg304models.models.*;
 
 public class ModelManager {
 	private static final String connectURL = "jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1522:ug";
@@ -66,6 +64,10 @@ public class ModelManager {
 		switch(table) {
 		case CUSTOMER:
 			return (GenericModel<Customer>) new CustomerModel(this.con);
+		case IMAGE_LOG:
+			return (GenericModel<Image>) new ImageModel(this.con);
+		case MATCH:
+			return (GenericModel<Match>) new MatchModel(this.con);
 		case PERSONALITY:
 			return (GenericModel<Personality>) new PersonalityModel(this.con);
 		default:

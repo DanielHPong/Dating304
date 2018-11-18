@@ -5,6 +5,8 @@ import java.util.List;
 
 import pkg304data.Personality;
 import pkg304models.models.CustomerModel;
+import pkg304models.models.ImageModel;
+import pkg304models.models.MatchModel;
 import pkg304models.models.PersonalityModel;
 
 public class entrypoint {
@@ -14,12 +16,15 @@ public class entrypoint {
 		try {
 			ModelManager mManager = ModelManager.getInstance();
 
-			CustomerModel cModel = (CustomerModel) mManager.getModel(Table.CUSTOMER);
-			// System.out.println("creation code: " + cModel.createCustomer("edk@gmail.com", "Ed Knorr", 3));
-			// System.out.println("id from mail: " + cModel.getIdFromEmail("edk@gmail.com"));
-			// System.out.println("deactivated: " + cModel.deactivateCustomer("edk@gmail.com"));
-			System.out.println("creation code: " + cModel.getMatchedCustomers(10));
+			CustomerModel iModel = (CustomerModel) mManager.getModel(Table.CUSTOMER);
+			// System.out.println("creating customer: " + iModel.createCustomer("ts@gmail.com", "Taylor Swift", "F", 3));
+			int id = iModel.getIdFromEmail("ts@gmail.com");
+			System.out.println("id from email: " + id);
+			System.out.println("info from id: " + iModel.getCustomerInfoById(id));
 			
+			MatchModel mModel = (MatchModel) mManager.getModel(Table.MATCH);
+			// System.out.println("createMatches returned: " + mModel.createMatches(id, 3, "F"));
+			// System.out.println("getNumBestMatches returned: " + mModel.getNumBestMatches(id));
 			mManager.close();
 		} catch (SQLException e) {
 			System.out.println("ERROR: failed with message: " + e.getMessage());
