@@ -6,6 +6,7 @@ drop table image_log cascade constraints;
 drop table personality_match cascade constraints;
 drop table premium_customer cascade constraints;
 drop table payment_info cascade constraints;
+drop table payment_info_card_type cascade constraints;
 drop table premium_package cascade constraints;
 drop table purchase cascade constraints;
 drop table benefit cascade constraints;
@@ -91,13 +92,14 @@ create table payment_info
     (infoId integer,
     cardNo char(50) not null,
     address char(255) not null,
-    primary key (infoId));
+    primary key (infoId)
+    unique (cardNo));
 
 create table payment_info_card_type
 	(cardNo char(50),
 	cardType char(50) not null,
 	primary key (cardNo),
-	foreign key (cardNo) references payment_info on delete cascade);
+	foreign key (cardNo) references payment_info (cardNo) on delete cascade);
 
 create table premium_customer
     (customerId integer,
@@ -131,7 +133,7 @@ create table premium_to_benefit
     bName char(50),
     primary key (pName, bName),
     foreign key (pName) references premium_package on delete cascade,
-    foreign key (bName) references benefits on delete cascade);
+    foreign key (bName) references benefit on delete cascade);
 
 create view customer_bname as
 	select customerId, bname
