@@ -7,8 +7,8 @@ import pkg304models.models.*;
 
 public class ModelManager {
 	private static final String connectURL = "jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1522:ug";
-	private static String username = "ora_l9k0b";
-	private static String password = "a12420155";
+	private static String username = "ora_<cs id>";
+	private static String password = "a<student id>";
 	private static ModelManager manager = null;
 	private Connection con;
 	
