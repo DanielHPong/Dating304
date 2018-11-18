@@ -5,7 +5,9 @@
  */
 package pkg304ui;
 
+import facadeUI.UserManager;
 import java.util.List;
+import pkg304data.PaymentInfo;
 
 /**
  *
@@ -18,6 +20,7 @@ public class UIUpdater {
     }
     
     public static boolean login(String user, List matches) {
+        UserManager userManager = UserManager.getInstance();
         UIMain.UI.currentUserDynamicLabel.setText(user);
         // UIMain.UI.matchesDropdown.setSelectedIndex(0);
         UIMain.UI.matchesDropdown.removeAllItems();
@@ -31,7 +34,15 @@ public class UIUpdater {
         UIMain.UI.sendMessageTextField.setEnabled(true);
         UIMain.UI.buyPremiumButton.setEnabled(true);
         UIMain.UI.cancelPremiumButton.setEnabled(true);
-        UIMain.UI.addPaymentInfoButton.setEnabled(true);
+        PaymentInfo paymentInfo = null;
+        try {
+            paymentInfo = userManager.viewPaymentInfo();
+        } catch (Exception e) {
+            return false;
+        }
+        if (paymentInfo == null) {
+            UIMain.UI.addPaymentInfoButton.setEnabled(true);
+        }
         return true;
     }
     

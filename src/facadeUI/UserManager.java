@@ -213,7 +213,7 @@ public class UserManager {
 			throw new Exception("You are not logged in!");
 		}
 		int uid = LoginMan.getUID();
-		PaymentInfo pInfo;
+		PaymentInfo pInfo = null;
 		try {
 			PaymentInfoModel pModel = (PaymentInfoModel) modelMan.getModel(Table.PAYMENT_INFO);
 			pInfo = pModel.getPaymentInfoById(uid);
