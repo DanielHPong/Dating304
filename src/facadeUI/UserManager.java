@@ -206,6 +206,31 @@ public class UserManager {
 		return packages;
 	}
 	
+	// Displays # broken matches per personality type for this user.
+	public void getBrokenMatchesByType() {
+		if (!LoginMan.isLoggedOn()) {
+			UIUpdater.error("Error: you are not logged in.");
+		} else {
+			int uid = LoginMan.getUID();
+			List<Object> res;
+			List<String> toDisplay = new ArrayList();
+			try {
+				MatchModel mModel = (MatchModel) modelMan.getModel(Table.MATCH);
+				res = mModel.getPersonalityToBrokenMatchCount(uid);
+				int n = res.size()/2;
+				for (int i = 0; i < n; i++) {
+					int i1 = i * 2;
+					int i2 = i1 + 1;
+					String s = "Type: " + res.get(i1) + "    " + "# of Broken Hearts: " + res.get(i2);
+					toDisplay.add(s);
+				}
+				UIUpdater.getMessages(toDisplay);
+			} catch (SQLException e) {
+				UIUpdater.error("Failed to display broken hearts: " + e.getMessage());
+			}
+		}
+	}
+	
 	
 	// Getter
 }
