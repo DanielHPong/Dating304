@@ -7,10 +7,13 @@ package pkg304ui.UI;
 
 import facadeUI.LogInManager;
 import facadeUI.UserManager;
+import facadeUI.Viewer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.JOptionPane;
+import pkg304data.PaymentInfo;
+import pkg304data.PremiumPackage;
 import pkg304ui.UIUpdater;
 
 /**
@@ -297,18 +300,29 @@ public class UIFrame extends javax.swing.JFrame {
     private void buyPremiumButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyPremiumButtonActionPerformed
         LogInManager logInManager = LogInManager.getInstance();
         UserManager userManager = UserManager.getInstance();
+        Viewer viewer = Viewer.getInstance();
         if (logInManager.isLoggedOn()) {
-            List pos = new ArrayList(); // TODO - Get list of all premium packages
+            List<PremiumPackage> pos = new ArrayList<PremiumPackage>();
+            try {
+                pos = viewer.viewPrem();
+            } catch (Exception e) {
+                UIUpdater.error(e.getMessage());
+                return;
+            }
             Object[] possibilities = {};
-            for (Object p : pos) {
-                possibilities = appendValue(possibilities, p);
+            for (PremiumPackage p : pos) {
+                possibilities = appendValue(possibilities, p.getpName());
             }
             String premium = (String)JOptionPane.showInputDialog(null,null,"Please choose a premium package to buy.",JOptionPane.PLAIN_MESSAGE,null,possibilities,pos.get(0));
             if (premium != null) {
-                // TODO - Get payment info
-                // userManager.buyPrem(premium);
-            } else {
-                return;
+                PaymentInfo paymentInfo = null;
+                try {
+                    paymentInfo = userManager.viewPaymentInfo();
+                } catch (Exception e) {
+                    UIUpdater.error(e.getMessage());
+                    return;
+                }
+                userManager.buyPrem(premium, paymentInfo.getCardType(), paymentInfo.getCardNo(), paymentInfo.getAddress());
             }
         } else {
             UIUpdater.error("Not logged in.");
@@ -319,16 +333,20 @@ public class UIFrame extends javax.swing.JFrame {
         LogInManager logInManager = LogInManager.getInstance();
         UserManager userManager = UserManager.getInstance();
         if (logInManager.isLoggedOn()) {
-            List pos = new ArrayList(); // TODO - Get list of user's premium packages
+            List<PremiumPackage> pos = new ArrayList<PremiumPackage>();
+            try {
+                pos = userManager.myPremiums();
+            } catch (Exception e) {
+                UIUpdater.error(e.getMessage());
+                return;
+            }
             Object[] possibilities = {};
-            for (Object p : pos) {
-                possibilities = appendValue(possibilities, p);
+            for (PremiumPackage p : pos) {
+                possibilities = appendValue(possibilities, p.getpName());
             }
             String premium = (String)JOptionPane.showInputDialog(null,null,"Please choose a premium package to cancel.",JOptionPane.PLAIN_MESSAGE,null,possibilities,pos.get(0));
             if (premium != null) {
                 userManager.cancelPrem(premium);
-            } else {
-                return;
             }
         } else {
             UIUpdater.error("Not logged in.");
