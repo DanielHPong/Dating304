@@ -96,12 +96,18 @@ public class UserManager {
 		}
 	}
 	
-	public void buyPrem(String type, String cardType, String cardNo, String address) {
-		//TODO
+	public void buyPrem(String pName) {
 		if (!LoginMan.isLoggedOn()) {
 			UIUpdater.error("Error: You are not logged in.");
 		} else {
 			int uid = LoginMan.getUID();
+			try {
+				PremiumPackageModel pModel = (PremiumPackageModel) modelMan.getModel(Table.PREMIUM_PACKAGE);
+				pModel.createPurchase(uid, pName);
+				UIUpdater.setText("You can now enjoy our premium benefits!");
+			} catch (Exception e) {
+				UIUpdater.error("Failed to buy premium: " + e.getMessage());
+			}
 		}
 	}
 	

@@ -9,7 +9,7 @@ public interface DaFacade {
 	public void getMatch();
 	public void getMessage(String id);
 	public void sendMessage(String id, String msg);
-	public void buyPrem(String type, String cardType, String cardNo, String address);
+	public void buyPrem(String pName);
 	public void cancelPrem(String type);
 	public void uploadImage(String url);
 	public void deleteImage(String url);
