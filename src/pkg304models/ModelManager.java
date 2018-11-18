@@ -62,6 +62,8 @@ public class ModelManager {
 	public GenericModel getModel(Table table) throws SQLException {
 		this.open();
 		switch(table) {
+		case CONTENT:
+			return (GenericModel<Content>) new ContentModel(this.con);
 		case CUSTOMER:
 			return (GenericModel<Customer>) new CustomerModel(this.con);
 		case IMAGE_LOG:
