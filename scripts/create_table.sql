@@ -12,7 +12,7 @@ drop table benefits cascade constraints;
 drop table premium_to_benefit cascade constraints;
 drop sequence ora_d4m0b.incr_pId;
 drop sequence ora_d4m0b.incr_customerId;
-
+drop sequence ora_d4m0b.incr_chatId;
 
 
 create sequence incr_pId
@@ -21,6 +21,11 @@ create sequence incr_pId
 	cache 10;
 
 create sequence incr_customerId
+	start with 1
+	increment by 1
+	cache 10;
+
+create sequence incr_chatId
 	start with 1
 	increment by 1
 	cache 10;
@@ -55,7 +60,7 @@ create table content
     senderId integer not null,
     receiverId integer not null,
     message char(255) not null,
-    time date not null,
+    time timestamp not null,
     primary key (chatId),
     foreign key (senderId) references customer,
     foreign key (receiverId) references customer);
@@ -184,3 +189,20 @@ insert into image_log (customerId, url) values
 	(4, 'google.com/img5');
 insert into image_log (customerId, url) values
 	(5, 'google.com/img6');
+
+insert into content (chatId, senderId, receiverId, message, time) values
+	(incr_chatId.nextval, 2, 3, 'Hey Ellen', timestamp '2018-11-15 12:34:56');
+insert into content (chatId, senderId, receiverId, message, time) values
+	(incr_chatId.nextval, 3, 2, 'Hi Jason', timestamp '2018-11-15 12:35:56');
+insert into content (chatId, senderId, receiverId, message, time) values
+	(incr_chatId.nextval, 3, 2, 'What up?', timestamp '2018-11-17 12:34:56');
+insert into content (chatId, senderId, receiverId, message, time) values
+	(incr_chatId.nextval, 2, 3, 'Nothing much', timestamp '2018-11-17 12:35:56');
+insert into content (chatId, senderId, receiverId, message, time) values
+	(incr_chatId.nextval, 4, 5, 'Hi Daniel, this is David wyd?', timestamp '2018-11-17 12:33:56');
+insert into content (chatId, senderId, receiverId, message, time) values
+	(incr_chatId.nextval, 7, 5, 'Hi Daniel, this is Emma', timestamp '2018-11-17 12:33:56');
+insert into content (chatId, senderId, receiverId, message, time) values
+	(incr_chatId.nextval, 7, 5, 'Wanna hang out?', timestamp '2018-11-17 12:34:56');
+insert into content (chatId, senderId, receiverId, message, time) values
+	(incr_chatId.nextval, 5, 7, 'Nah I need to do 304', timestamp '2018-11-17 12:35:56');
