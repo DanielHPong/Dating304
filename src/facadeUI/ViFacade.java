@@ -80,5 +80,18 @@ public class ViFacade implements DaFacade {
 	public void showBuyRecords() {
 		viewer.showBuyRecords();
 	}
+	
+	@Override
+	// Display all available premium options
+	public void viewPrem() {
+		viewer.viewPrem();
+	}
+	
+	@Override
+	// Display all premium this user has
+	public void myPremiums() {
+		UserMan.myPremiums();
+	}
+
 
 }

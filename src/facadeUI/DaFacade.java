@@ -15,4 +15,6 @@ public interface DaFacade {
 	public void viewPaymentInfo();
 	public void showUserStats();
 	public void showBuyRecords();
+	public void viewPrem();
+	public void myPremiums();
 }

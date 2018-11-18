@@ -95,6 +95,11 @@ public class UserManager {
 		}
 	}
 	
+	public void myPremiums() {
+		// TODO
+		// Return all premium this user has
+	}
+	
 	
 	// Getter
 }
