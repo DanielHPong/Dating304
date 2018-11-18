@@ -7,10 +7,13 @@ package pkg304ui.UI;
 
 import facadeUI.LogInManager;
 import facadeUI.UserManager;
+import facadeUI.Viewer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.JOptionPane;
+import pkg304data.PaymentInfo;
+import pkg304data.PremiumPackage;
 import pkg304ui.UIUpdater;
 
 /**
@@ -232,12 +235,6 @@ public class UIFrame extends javax.swing.JFrame {
         LogInManager logInManager = LogInManager.getInstance();
         logInManager.login(userEmail);
         if (logInManager.isLoggedOn()) {
-            LogoutButton.setEnabled(true);
-            getMessagesButton.setEnabled(true);
-            sendMessageButton.setEnabled(true);
-            sendMessageTextField.setEnabled(true);
-            buyPremiumButton.setEnabled(true);
-            cancelPremiumButton.setEnabled(true);
         } else {
             int createNew = JOptionPane.showConfirmDialog(null, "This user doesn't exist. Do you want to create an account for this user?");
             if (createNew == JOptionPane.YES_OPTION) {
@@ -249,12 +246,6 @@ public class UIFrame extends javax.swing.JFrame {
                 if (personality != null && userName != null && gender != null) {
                     int pid = Integer.getInteger(personality);
                     logInManager.signUp(userEmail, userName, gender, pid);
-                    LogoutButton.setEnabled(true);
-                    getMessagesButton.setEnabled(true);
-                    sendMessageButton.setEnabled(true);
-                    sendMessageTextField.setEnabled(true);
-                    buyPremiumButton.setEnabled(true);
-                    cancelPremiumButton.setEnabled(true);
                 }
             }
         }
@@ -264,12 +255,6 @@ public class UIFrame extends javax.swing.JFrame {
         LogInManager logInManager = LogInManager.getInstance();
         if (logInManager.isLoggedOn()) {
             logInManager.logout();
-            LogoutButton.setEnabled(false);
-            getMessagesButton.setEnabled(false);
-            sendMessageButton.setEnabled(false);
-            sendMessageTextField.setEnabled(false);
-            buyPremiumButton.setEnabled(false);
-            cancelPremiumButton.setEnabled(false);
         } else {
             UIUpdater.error("Not logged in.");
         }
@@ -298,7 +283,6 @@ public class UIFrame extends javax.swing.JFrame {
                 String otherUser = (String) matchesDropdown.getSelectedItem();
                 String message = sendMessageTextField.getText();
                 userManager.sendMessage(otherUser, message);
-                UIUpdater.setText("Message sent to " + otherUser + ": " + message);
             } else {
                 UIUpdater.error("No user selected.");
             }
@@ -316,18 +300,29 @@ public class UIFrame extends javax.swing.JFrame {
     private void buyPremiumButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyPremiumButtonActionPerformed
         LogInManager logInManager = LogInManager.getInstance();
         UserManager userManager = UserManager.getInstance();
+        Viewer viewer = Viewer.getInstance();
         if (logInManager.isLoggedOn()) {
-            List pos = new ArrayList(); // TODO - Get list of premium packages
+            List<PremiumPackage> pos = new ArrayList<PremiumPackage>();
+            try {
+                pos = viewer.viewPrem();
+            } catch (Exception e) {
+                UIUpdater.error(e.getMessage());
+                return;
+            }
             Object[] possibilities = {};
-            for (Object p : pos) {
-                possibilities = appendValue(possibilities, p);
+            for (PremiumPackage p : pos) {
+                possibilities = appendValue(possibilities, p.getpName());
             }
             String premium = (String)JOptionPane.showInputDialog(null,null,"Please choose a premium package to buy.",JOptionPane.PLAIN_MESSAGE,null,possibilities,pos.get(0));
             if (premium != null) {
-                // TODO - Get payment info
-                // userManager.buyPrem(premium);
-            } else {
-                return;
+                PaymentInfo paymentInfo = null;
+                try {
+                    paymentInfo = userManager.viewPaymentInfo();
+                } catch (Exception e) {
+                    UIUpdater.error(e.getMessage());
+                    return;
+                }
+                userManager.buyPrem(premium, paymentInfo.getCardType(), paymentInfo.getCardNo(), paymentInfo.getAddress());
             }
         } else {
             UIUpdater.error("Not logged in.");
@@ -338,16 +333,20 @@ public class UIFrame extends javax.swing.JFrame {
         LogInManager logInManager = LogInManager.getInstance();
         UserManager userManager = UserManager.getInstance();
         if (logInManager.isLoggedOn()) {
-            List pos = new ArrayList(); // TODO - Get list of premium packages
+            List<PremiumPackage> pos = new ArrayList<PremiumPackage>();
+            try {
+                pos = userManager.myPremiums();
+            } catch (Exception e) {
+                UIUpdater.error(e.getMessage());
+                return;
+            }
             Object[] possibilities = {};
-            for (Object p : pos) {
-                possibilities = appendValue(possibilities, p);
+            for (PremiumPackage p : pos) {
+                possibilities = appendValue(possibilities, p.getpName());
             }
             String premium = (String)JOptionPane.showInputDialog(null,null,"Please choose a premium package to cancel.",JOptionPane.PLAIN_MESSAGE,null,possibilities,pos.get(0));
             if (premium != null) {
                 userManager.cancelPrem(premium);
-            } else {
-                return;
             }
         } else {
             UIUpdater.error("Not logged in.");
@@ -392,20 +391,20 @@ public class UIFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JPanel LeftPanel;
-    private javax.swing.JButton LogoutButton;
+    public javax.swing.JButton LogoutButton;
     private javax.swing.JButton PickUserButton;
     private javax.swing.JPanel RightPanel;
     private javax.swing.JScrollPane RightScroll;
     public javax.swing.JTextPane RightText;
-    private javax.swing.JButton buyPremiumButton;
-    private javax.swing.JButton cancelPremiumButton;
+    public javax.swing.JButton buyPremiumButton;
+    public javax.swing.JButton cancelPremiumButton;
     public javax.swing.JLabel currentUserDynamicLabel;
     private javax.swing.JLabel currentUserStaticLabel;
     public javax.swing.JLabel errorDynamicLabel;
-    private javax.swing.JButton getMessagesButton;
+    public javax.swing.JButton getMessagesButton;
     public javax.swing.JComboBox<String> matchesDropdown;
     private javax.swing.JLabel matchesStaticLabel;
-    private javax.swing.JButton sendMessageButton;
-    private javax.swing.JTextField sendMessageTextField;
+    public javax.swing.JButton sendMessageButton;
+    public javax.swing.JTextField sendMessageTextField;
     // End of variables declaration//GEN-END:variables
 }
