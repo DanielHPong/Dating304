@@ -112,10 +112,10 @@ public class CustomerModel extends GenericModel<Customer> {
 	public int deactivateCustomer(int uid) throws SQLException {
 		List<Integer> types = new ArrayList<Integer>();
 		List<Object> values = new ArrayList<Object>();
-		types.add(Types.CHAR);
+		types.add(Types.INTEGER);
 		values.add((Object) uid);
 		return execUpdateSQL(
-			"UPDATE Customer SET isActive = 0 WHERE customerId = cast(? as integer)",
+			"UPDATE Customer SET isActive = 0 WHERE customerId = ?",
 			types,
 			values
 		);
