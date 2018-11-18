@@ -23,5 +23,9 @@ public class Viewer {
 	public void showBuyRecords() {
 		// TODO
 	}
+	
+	public void viewPrem() {
+		// TODO
+	}
 	// Getter
 }
