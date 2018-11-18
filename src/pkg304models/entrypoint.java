@@ -1,13 +1,9 @@
 package pkg304models;
 
 import java.sql.SQLException;
-import java.util.List;
-
-import pkg304data.Personality;
 import pkg304models.models.CustomerModel;
-import pkg304models.models.ImageModel;
 import pkg304models.models.MatchModel;
-import pkg304models.models.PersonalityModel;
+import pkg304ui.UIMain;
 
 public class entrypoint {
 
@@ -26,6 +22,7 @@ public class entrypoint {
 			// System.out.println("createMatches returned: " + mModel.createMatches(id, 3, "F"));
 			// System.out.println("getNumBestMatches returned: " + mModel.getNumBestMatches(id));
 			mManager.close();
+                        UIMain.main(args);
 		} catch (SQLException e) {
 			System.out.println("ERROR: failed with message: " + e.getMessage());
 		}
