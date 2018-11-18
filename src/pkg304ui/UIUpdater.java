@@ -32,8 +32,14 @@ public class UIUpdater {
         UIMain.UI.getMessagesButton.setEnabled(true);
         UIMain.UI.sendMessageButton.setEnabled(true);
         UIMain.UI.sendMessageTextField.setEnabled(true);
-        UIMain.UI.buyPremiumButton.setEnabled(true);
-        UIMain.UI.cancelPremiumButton.setEnabled(true);
+        try {
+            if (userManager.viewPaymentInfo() != null) {
+                UIMain.UI.buyPremiumButton.setEnabled(true);
+                UIMain.UI.cancelPremiumButton.setEnabled(true);
+            }
+        } catch (Exception e) {
+            return false;
+        }
         PaymentInfo paymentInfo = null;
         try {
             paymentInfo = userManager.viewPaymentInfo();
