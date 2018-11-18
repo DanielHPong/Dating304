@@ -25,6 +25,24 @@ public class UIUpdater {
             String[] mat = ((String) match).split("\n");
             UIMain.UI.matchesDropdown.addItem(mat[1].substring(5));
         }
+        UIMain.UI.LogoutButton.setEnabled(true);
+        UIMain.UI.getMessagesButton.setEnabled(true);
+        UIMain.UI.sendMessageButton.setEnabled(true);
+        UIMain.UI.sendMessageTextField.setEnabled(true);
+        UIMain.UI.buyPremiumButton.setEnabled(true);
+        UIMain.UI.cancelPremiumButton.setEnabled(true);
+        return true;
+    }
+    
+    public static boolean logout() {
+        UIMain.UI.currentUserDynamicLabel.setText("");
+        UIMain.UI.matchesDropdown.removeAllItems();
+        UIMain.UI.LogoutButton.setEnabled(false);
+        UIMain.UI.getMessagesButton.setEnabled(false);
+        UIMain.UI.sendMessageButton.setEnabled(false);
+        UIMain.UI.sendMessageTextField.setEnabled(false);
+        UIMain.UI.buyPremiumButton.setEnabled(false);
+        UIMain.UI.cancelPremiumButton.setEnabled(false);
         return true;
     }
     

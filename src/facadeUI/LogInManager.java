@@ -104,7 +104,7 @@ public class LogInManager {
 	public void logout() {
 		uid = 0;
 		isLoggedOn = false;
-		UIUpdater.error("You are now logged out.");
+		UIUpdater.logout();
 	}
 
 	// Getters
