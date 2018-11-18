@@ -74,7 +74,7 @@ public class UIUpdater {
     public static boolean getMessages(List messages) {
         String output = "";
         for (Object message : messages) {
-            output += message + "\n\n";
+            output += ((String) message) + "\n\n";
         }
         setText(output);
         return true;
