@@ -37,8 +37,8 @@ public class ViFacade implements DaFacade {
 	}
 
 	@Override
-	public void buyPrem(String type, String cardType, String cardNo, String address) {
-		UserMan.buyPrem(type, cardType, cardNo, address);
+	public void buyPrem(String pName) {
+		UserMan.buyPrem(pName);
 	}
 
 	@Override

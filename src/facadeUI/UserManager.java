@@ -96,12 +96,14 @@ public class UserManager {
 		}
 	}
 	
-	public void buyPrem(String type, String cardType, String cardNo, String address) {
+	public void buyPrem(String pName) {
 		//TODO
 		if (!LoginMan.isLoggedOn()) {
 			UIUpdater.error("Error: You are not logged in.");
 		} else {
 			int uid = LoginMan.getUID();
+			// 1. retrieve paymentinfo
+			// 2. make purchase after
 		}
 	}
 	
