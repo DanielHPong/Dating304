@@ -92,6 +92,15 @@ public class UIUpdater {
         return true;
     }
     
+    public static boolean updateMatches(List matches) {
+        UIMain.UI.matchesDropdown.removeAllItems();
+        for (Object match : matches) {
+            String[] mat = ((String) match).split("\n");
+            UIMain.UI.matchesDropdown.addItem(mat[1].substring(5));
+        }
+        return true;
+    }
+    
     public static void setText(String text) {
         UIMain.setText(text);
     }

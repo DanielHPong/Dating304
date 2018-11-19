@@ -311,6 +311,13 @@ public class UserManager {
 				} else {
 					UIUpdater.error("Looks like you've already been ghosted!");
 				}
+                                List<Customer> matched = ((CustomerModel) modelMan.getModel(Table.CUSTOMER)).getMatchedCustomers(uid);
+				ArrayList<String> matches = new ArrayList<String>();
+				for (Customer match : matched) {
+					String s = "Name: " + match.getName() + "\n" + "uid: " + match.getCustomerId();
+					matches.add(s);
+				}
+                                UIUpdater.updateMatches(matches);
 			} catch (SQLException e) {
 				UIUpdater.error("Failed ghosting user: " + e.getMessage());
 			}
