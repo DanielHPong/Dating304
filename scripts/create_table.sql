@@ -12,6 +12,7 @@ drop table purchase cascade constraints;
 drop table benefit cascade constraints;
 drop table premium_to_benefit cascade constraints;
 drop view customer_bname;
+drop view purchase_view;
 drop sequence ora_d4m0b.incr_pId;
 drop sequence ora_d4m0b.incr_customerId;
 drop sequence ora_d4m0b.incr_chatId;
@@ -140,6 +141,10 @@ create view customer_bname as
 	from purchase join premium_to_benefit
 	on packageName = pName;
     
+create view purchase_view as
+	select customerId, packageName
+	from purchase;
+
 	
 	
 insert into personality (pId, type) values

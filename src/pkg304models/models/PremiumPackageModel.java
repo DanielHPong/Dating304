@@ -16,7 +16,7 @@ import pkg304models.Table;
 
 public class PremiumPackageModel extends GenericModel<PremiumPackage> {
 
-	protected PremiumPackageModel(Connection con) {
+	public PremiumPackageModel(Connection con) {
 		super(con);
 	}
 
@@ -37,8 +37,12 @@ public class PremiumPackageModel extends GenericModel<PremiumPackage> {
 	public List<Benefit> getBenefitsByPackage(String pName) throws SQLException {
 		List<Integer> types = new ArrayList<Integer>();
 		List<Object> values = new ArrayList<Object>();
-		ResultSet rs = execQuerySQL("SELECT bName, bInfo FROM Premium_To_Benefit JOIN Benefit"
-				+ " ON Premium_To_Benefit.bName = Benefit.bName AND pName = cast(? as char(50))");
+		types.add(Types.CHAR);
+		values.add(pName);
+		
+		String cmd = "SELECT Benefit.bName, bInfo FROM Premium_To_Benefit JOIN Benefit"
+				+ " ON Premium_To_Benefit.bName = Benefit.bName AND pName = cast(? as char(50))";
+		ResultSet rs = execQuerySQL(cmd, types, values);
 		List<Benefit> result = new ArrayList<Benefit>();
 		while (rs.next()) {
 			String bName = rs.getString("bName");
@@ -55,7 +59,9 @@ public class PremiumPackageModel extends GenericModel<PremiumPackage> {
 		List<Object> values = new ArrayList<Object>();
 		types.add(Types.INTEGER);
 		values.add(customerId);
-		ResultSet rs = execQuerySQL("SELECT pName, price FROM Purchase JOIN Premium_Package ON pName = packageName AND customerId = ?");
+		
+		String cmd = "SELECT Premium_Package.pName, price FROM Purchase JOIN Premium_Package ON pName = packageName AND customerId = ?";
+		ResultSet rs = execQuerySQL(cmd, types, values);
 		List<PremiumPackage> result = new ArrayList();
 		while (rs.next()) {
 			String pName = rs.getString("pName");

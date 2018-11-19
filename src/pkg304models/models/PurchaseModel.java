@@ -35,10 +35,7 @@ public class PurchaseModel extends GenericModel<Purchase>{
 	
 	// Returns list of String that represents purchase records
 	public List<String> getLedger() throws SQLException {
-		int res1 = execUpdateSQL("CREATE VIEW purchaseview AS SELECT customerId,packageName FROM Purchase");
-		ResultSet rs = execQuerySQL(
-			"SELECT * FROM purchaseview"
-		);
+		ResultSet rs = execQuerySQL("SELECT * FROM purchase_view");
 		List<String> result = new ArrayList();
 		while (rs.next()) {
 			int cId = rs.getInt("customerId");

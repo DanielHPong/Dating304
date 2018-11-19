@@ -52,7 +52,7 @@ public class MatchModel extends GenericModel<Match> {
 		ResultSet rs = execQuerySQL(cmd, types, values);
 		
 		List<Object> result = new ArrayList<Object>();
-		if (rs.next()) {
+		while (rs.next()) {
 			result.add(rs.getString("type") + ": " + rs.getInt("COUNT(*)"));
 		}
 		return result;
