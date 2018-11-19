@@ -23,4 +23,5 @@ public interface DaFacade {
 	public List<PremiumPackage> myPremiums() throws Exception;
 	public void addPaymentInfo(String cardType, String cardNo, String address);
 	public void deletePaymentInfo();
+	public void getBrokenMatchesByType();
 }

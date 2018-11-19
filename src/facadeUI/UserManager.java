@@ -128,10 +128,9 @@ public class UserManager {
 			int uid = LoginMan.getUID();
 			try {
 				iModel.createImage(uid, url);
+				UIUpdater.setText("Image uploaded!");
 			} catch (SQLException e) {
 				UIUpdater.error("Failed to upload image: " + e.getMessage());
-			} finally {
-				UIUpdater.setText("Image uploaded!");
 			}
 		}
 	}
@@ -150,16 +149,16 @@ public class UserManager {
 					UIUpdater.setText("Image deleted!");
 				}
 			} catch (SQLException e) {
-				UIUpdater.error("Failed to upload image: " + e.getMessage());
+				UIUpdater.error("Failed to delete image: " + e.getMessage());
 			}
 		}
 	}
 	
 	public ArrayList<String> getImage() {
-                ArrayList<String> images = new ArrayList();
+        ArrayList<String> images = new ArrayList();
 		if (!LoginMan.isLoggedOn()) {
 			UIUpdater.error("Error: You are not logged in.");
-                        return images;
+            return images;
 		} else {
 			int uid = LoginMan.getUID();
 			List<Image> imgs;
@@ -171,7 +170,7 @@ public class UserManager {
 				return images;
 			} catch (SQLException e) {
 				UIUpdater.error("Failed to retrieve images: " + e.getMessage());
-                                return images;
+				return images;
 			}
 		}
 	}
@@ -188,7 +187,7 @@ public class UserManager {
 				for (Image img : imgs) {
 					images.add(img.getUrl());
 				}
-				UIUpdater.login("Your images", images);
+				UIUpdater.getMessages(images);
 			} catch (SQLException e) {
 				UIUpdater.error("Failed to retrieve images: " + e.getMessage());
 			}
@@ -203,8 +202,12 @@ public class UserManager {
 			int uid = LoginMan.getUID();
 			try {
 				PaymentInfoModel pModel = (PaymentInfoModel) modelMan.getModel(Table.PAYMENT_INFO);
-				pModel.createPaymentInfo(uid, cardType, cardNo, address);
-				UIUpdater.setText("Your payment info has been created!");
+				int n = pModel.createPaymentInfo(uid, cardType, cardNo, address);
+				if (n == 3) {
+					UIUpdater.setText("Your payment info has been created!");
+				} else {
+					UIUpdater.error("You can only have one paymentInfo.");
+				}
 			} catch (SQLException e) {
 				UIUpdater.error("Failed creating paymentInfo: " + e.getMessage());
 			}
@@ -219,8 +222,12 @@ public class UserManager {
 			int uid = LoginMan.getUID();
 			try {
 				PaymentInfoModel pModel = (PaymentInfoModel) modelMan.getModel(Table.PAYMENT_INFO);
-				pModel.deletePaymentInfo(uid);
-				UIUpdater.setText("Your payment info has been deleted!");
+				int n = pModel.deletePaymentInfo(uid);
+				if (n == 0) {
+					UIUpdater.error("You do not have paymentInfo!");
+				} else {
+					UIUpdater.setText("Your payment info has been deleted!");
+				}
 			} catch (SQLException e) {
 				UIUpdater.error("Failed deleting paymentInfo: " + e.getMessage());
 			}
