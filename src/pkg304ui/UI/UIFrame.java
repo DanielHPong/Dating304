@@ -345,8 +345,8 @@ public class UIFrame extends javax.swing.JFrame {
             int createNew = JOptionPane.showConfirmDialog(null, "This user doesn't exist. Do you want to create an account for this user?");
             if (createNew == JOptionPane.YES_OPTION) {
                 String userName = JOptionPane.showInputDialog("Please enter a name for this user.");
-                Object[] perpos = {"1", "2", "3", "4"};
-                String personality = (String)JOptionPane.showInputDialog(null,null,"Please choose a personality type.",JOptionPane.PLAIN_MESSAGE,null,perpos,"1");
+                Object[] perpos = {"2", "3", "4", "5"};
+                String personality = (String)JOptionPane.showInputDialog(null,null,"Please choose a personality type.",JOptionPane.PLAIN_MESSAGE,null,perpos,"2");
                 Object[] genpos = {"MALE", "FEMALE"};
                 String gender = (String)JOptionPane.showInputDialog(null,null,"Please choose a gender.",JOptionPane.PLAIN_MESSAGE,null,genpos,"MALE");
                 if (personality != null && userName != null && gender != null) {
