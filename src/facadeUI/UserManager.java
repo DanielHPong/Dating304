@@ -306,7 +306,7 @@ public class UserManager {
 			try {
 				MatchModel mModel = (MatchModel) modelMan.getModel(Table.MATCH);
 				int res = mModel.deactivateMatch(uid, Integer.parseInt(id));
-				if (res == 2) {
+				if (res == 1) {
 					UIUpdater.setText("You have ghosted user: " + id + ", douche.");
 				} else {
 					UIUpdater.error("Looks like you've already been ghosted!");

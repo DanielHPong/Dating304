@@ -57,6 +57,7 @@ public class UIUpdater {
     }
     
     public static boolean logout() {
+        setText("");
         UIMain.UI.currentUserDynamicLabel.setText("");
         UIMain.UI.matchesDropdown.removeAllItems();
         UIMain.UI.LogoutButton.setEnabled(false);
