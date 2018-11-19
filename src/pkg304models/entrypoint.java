@@ -6,6 +6,7 @@ import java.util.List;
 
 import pkg304data.Content;
 import pkg304data.Customer;
+import pkg304data.Image;
 import pkg304data.Personality;
 import pkg304models.models.ContentModel;
 import pkg304models.models.CustomerModel;
@@ -52,23 +53,29 @@ public class entrypoint {
 			
 			// ImageModel Test
 			ImageModel iModel = (ImageModel) mManager.getModel(Table.IMAGE_LOG);
-			System.out.println("Giving Taylor images: " + iModel.createImage(id, "tdabest.com/img1") + iModel.createImage(id, "tdabest.com/img2"));
-			System.out.println("Taylor's images: " + iModel.getUserImage(id));
-			System.out.println("Deleting Taylor images: " + iModel.deleteImage(id, "tdabest.com/img1") + iModel.deleteImage(id, "tdabest.com/img2"));
+			desc("Giving Taylor some images");
+			System.out.println(iModel.createImage(id, "tdabest.com/img1") + iModel.createImage(id, "tdabest.com/img2"));
+			desc("Getting Taylor's images: Should be tdabest.com/img1, tdabest.com/img2");
+			List<Image> imgs = iModel.getUserImage(id);
+			System.out.println(Arrays.asList(imgs.get(0).getUrl(), imgs.get(1).getUrl()));
+			desc("Deleting Taylor's images");
+			System.out.println(iModel.deleteImage(id, "tdabest.com/img1") + iModel.deleteImage(id, "tdabest.com/img2"));
 			
 			// ContentModel Test
 			ContentModel coModel = (ContentModel) mManager.getModel(Table.CONTENT);
+			desc("Creating convo between Taylor and Ellen");
 			System.out.println(
-				"Creating convo between Taylor and Ellen: " 
-				+ coModel.createContent(id, 3, "Hi Ellen! I'm Taylor.") 
-				+ coModel.createContent(3, id, "I like my hamster more than you!" 
-				+ coModel.createContent(id, 3, ":( Ellen I'm sad."))
+				coModel.createContent(id, 3, "Hi Ellen! I'm Taylor.") 
+				+ coModel.createContent(3, id, "I like my hamster more than you!" )
+				+ coModel.createContent(id, 3, ":( Ellen I'm sad.")
 			);
+			desc("Getting convo between Taylor and Ellen");
 			List<Content> convo = coModel.getConversation(id, 3);
-			System.out.println("Getting convo between Taylor and Ellen: " + convo.get(0).getMessage() + " " + convo.get(1).getMessage() + " " + convo.get(2).getMessage());
+			System.out.println(Arrays.asList(convo.get(0).getMessage(), convo.get(1).getMessage(), convo.get(2).getMessage()));
 
 			// Final
-			System.out.println("Deactivating Taylor: " + cModel.deactivateCustomer(id));
+			desc("Deactivating Taylor");
+			System.out.println(cModel.deactivateCustomer(id));
 			
 			mManager.close();
 		} catch (SQLException e) {
