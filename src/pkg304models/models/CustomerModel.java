@@ -76,13 +76,12 @@ public class CustomerModel extends GenericModel<Customer> {
 	public List<Customer> getMatchedCustomers(int customerId) throws SQLException {
 		List<Integer> types = new ArrayList<Integer>();
 		List<Object> values = new ArrayList<Object>();
-		types.addAll(Arrays.asList(Types.INTEGER, Types.INTEGER));
-		values.addAll(Arrays.asList((Object) customerId, (Object) customerId));
+		types.addAll(Arrays.asList(Types.INTEGER, Types.INTEGER, Types.INTEGER));
+		values.addAll(Arrays.asList(customerId, customerId, customerId));
 		
-		String cmd = "SELECT customerId, personalityId, email, name, isActive FROM Customer JOIN Match"
-				+ " ON (customer1Id = ? OR customer2Id = ?)"
-				+ " AND (c1Active = '1' AND c2Active = '1')";
-		
+		String cmd = "SELECT customerId, personalityId, email, name, gender, isActive FROM Customer JOIN Match"
+				+ " ON (customer1Id = customerId OR customer2Id = customerId) AND (customer1Id = ? OR customer2Id = ?) AND (c1Active = '1' AND c2Active = '1')"
+				+ " WHERE customerId <> ?";
 		ResultSet rs = execQuerySQL(cmd, types, values);
 		List<Customer> result = new ArrayList<Customer>();
 		while (rs.next()) {
