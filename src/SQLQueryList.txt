@@ -1,0 +1,65 @@
+Select and projection queries: 
+    SELECT * FROM Content
+    SELECT * FROM Content WHERE (senderId = ? AND receiverId = ?) OR (senderId = ? AND receiverId = ?) ORDER BY chatId ASC
+    SELECT * FROM Customer
+    SELECT * FROM Customer WHERE customerId = ?
+    SELECT customerId FROM Customer WHERE email = cast(? as char(50))
+    SELECT * FROM Image_Log
+    SELECT url FROM Image_Log WHERE customerId = ?
+    INSERT INTO Image_Log (customerId, url) VALUES (?, cast(? as char(255)))
+    SELECT * FROM Match
+    SELECT * FROM Payment_Info JOIN Payment_Info_Card_Type ON Payment_Info.cardNo = Payment_Info_Card_Type.cardNo
+    SELECT Payment_Info.infoId, Payment_Info.cardNo, cardType, address
+		FROM Payment_Info
+		JOIN Payment_Info_Card_Type ON Payment_Info.cardNo = Payment_Info_Card_type.cardNo
+		JOIN Premium_Customer ON Premium_Customer.customerId = ? AND Payment_Info.infoId = Premium_Customer.infoId
+    SELECT infoId FROM Payment_Info WHERE cardNo = cast(? as char(50))
+    SELECT * FROM Personality
+    SELECT * FROM Premium_Customer
+    SELECT bName FROM Customer_Bname WHERE customerId = ?
+    SELECT * FROM Premium_Package
+    SELECT * FROM Purchase
+    SELECT * FROM purchase_view
+
+
+Insertion queries: 
+    INSERT INTO Content (chatId, senderId, receiverId, message, time) VALUES (incr_chatId.nextval, ?, ?, ?, current_timestamp)
+    INSERT INTO Customer (customerId, email, name, gender, isActive, personalityId) VALUES (incr_customerId.nextval, ?, ?, ?, ?, ?)
+    INSERT INTO Match (customer1Id, customer2Id, c1Active, c2Active)"
+		SELECT ?, customerId, '1', '1'
+		FROM Customer
+		WHERE gender <> cast(? as char(10)) AND personalityId IN
+		(SELECT p2Id FROM Personality_Match WHERE p1Id = ? AND rank < 3)
+    INSERT INTO Payment_Info (infoId, cardNo, address) VALUES (incr_infoId.nextval, ?, ?)
+    INSERT INTO Payment_Info_Card_Type (cardNo, cardType) VALUES (?, ?)
+    INSERT INTO Premium_Customer (customerId, infoId) VALUES (?, ?)
+    INSERT INTO Purchase (customerId, infoId, packageName, purchaseTime) VALUES (?, ?, ?, current_timestamp)
+
+
+Join queries:
+    SELECT customerId, personalityId, email, name, gender, isActive FROM Customer 
+    JOIN Match ON (customer1Id = customerId OR customer2Id = customerId) AND (customer1Id = ? OR customer2Id = ?) 
+    AND (c1Active = '1' AND c2Active = '1') WHERE customerId <> ?
+    SELECT Benefit.bName, bInfo FROM Premium_To_Benefit JOIN Benefit ON Premium_To_Benefit.bName = Benefit.bName AND pName = cast(? as char(50))
+    SELECT Premium_Package.pName, price FROM Purchase JOIN Premium_Package ON pName = packageName AND customerId = ?
+
+
+Update queries:
+    UPDATE Customer SET isActive = 0 WHERE customerId = ?
+    UPDATE Match SET c1Active = '0' WHERE customer1Id = ? AND customer2Id = ?
+    UPDATE Match SET c2Active = '0' WHERE customer2Id = ? AND customer1Id = ?
+
+
+Delete queries:
+    DELETE FROM Image_Log WHERE customerId = ? AND url = cast(? as char(255))
+    DELETE FROM Payment_Info WHERE infoId IN (SELECT infoId FROM Premium_Customer WHERE customerId = ?)
+
+
+Aggregation queries:
+    SELECT type, COUNT(*)
+	    FROM Customer JOIN Personality ON personalityId = pId
+		WHERE customerId IN
+		(SELECT customer1Id FROM Match WHERE (c1Active = 0 OR c2Active = 0) AND customer2Id = ?
+		UNION
+		SELECT customer2Id FROM Match WHERE (c1Active = 0 OR c2Active = 0) AND customer1Id = ?)
+		GROUP BY type
