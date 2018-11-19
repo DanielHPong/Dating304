@@ -246,8 +246,8 @@ public class UserManager {
 			PaymentInfoModel pModel = (PaymentInfoModel) modelMan.getModel(Table.PAYMENT_INFO);
 			pInfo = pModel.getPaymentInfoById(uid);
 		} catch (SQLException e) {
-			UIUpdater.error("Failed to retrieve payment info: " + e.getMessage());
-			throw new Exception(e.getMessage());
+			// UIUpdater.error("Failed to retrieve payment info: " + e.getMessage());
+			return pInfo;
 		}
 		
 		return pInfo;

@@ -36,6 +36,7 @@ public class UIFrame extends javax.swing.JFrame {
         getImageButton.setEnabled(false);
         uploadImageButton.setEnabled(false);
         deleteImageButton.setEnabled(false);
+        getBrokenMatchesButton.setEnabled(false);
     }
 
     /**
@@ -281,6 +282,7 @@ public class UIFrame extends javax.swing.JFrame {
         RightScroll.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         RightText.setEditable(false);
+        RightText.setPreferredSize(new java.awt.Dimension(485, 740));
         RightScroll.setViewportView(RightText);
 
         javax.swing.GroupLayout RightPanelLayout = new javax.swing.GroupLayout(RightPanel);
@@ -406,7 +408,7 @@ public class UIFrame extends javax.swing.JFrame {
             for (PremiumPackage p : pos) {
                 possibilities = appendValue(possibilities, p.getpName());
             }
-            String premium = (String)JOptionPane.showInputDialog(null,null,"Please choose a premium package to buy.",JOptionPane.PLAIN_MESSAGE,null,possibilities,pos.get(0).getpName());
+            String premium = (String)JOptionPane.showInputDialog(null,null,"Please choose a premium package to buy.",JOptionPane.PLAIN_MESSAGE,null,possibilities,null);
             if (premium != null) {
                 userManager.buyPrem(premium);
             }
@@ -430,7 +432,7 @@ public class UIFrame extends javax.swing.JFrame {
             for (PremiumPackage p : pos) {
                 possibilities = appendValue(possibilities, p.getpName());
             }
-            String premium = (String)JOptionPane.showInputDialog(null,null,"Please choose a premium package to cancel.",JOptionPane.PLAIN_MESSAGE,null,possibilities,pos.get(0).getpName());
+            String premium = (String)JOptionPane.showInputDialog(null,null,"Please choose a premium package to cancel.",JOptionPane.PLAIN_MESSAGE,null,possibilities,null);
             if (premium != null) {
                 userManager.cancelPrem(premium);
             }
@@ -446,6 +448,8 @@ public class UIFrame extends javax.swing.JFrame {
         String cardAddress = JOptionPane.showInputDialog("Please enter an address for this user.");
         if (cardType != null && cardNo != null && cardAddress != null) {
             userManager.addPaymentInfo(cardType, cardNo, cardAddress);
+            buyPremiumButton.setEnabled(true);
+            cancelPremiumButton.setEnabled(true);
         }
     }//GEN-LAST:event_addPaymentInfoButtonActionPerformed
 
