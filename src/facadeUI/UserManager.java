@@ -283,14 +283,7 @@ public class UserManager {
 			try {
 				MatchModel mModel = (MatchModel) modelMan.getModel(Table.MATCH);
 				res = mModel.getPersonalityToBrokenMatchCount(uid);
-				int n = res.size()/2;
-				for (int i = 0; i < n; i++) {
-					int i1 = i * 2;
-					int i2 = i1 + 1;
-					String s = "Type: " + res.get(i1) + "    " + "# of Broken Hearts: " + res.get(i2);
-					toDisplay.add(s);
-				}
-				UIUpdater.getMessages(toDisplay);
+				UIUpdater.getMessages(res);
 			} catch (SQLException e) {
 				UIUpdater.error("Failed to display broken hearts: " + e.getMessage());
 			}
