@@ -52,6 +52,7 @@ public class UIUpdater {
         UIMain.UI.getImageButton.setEnabled(true);
         UIMain.UI.uploadImageButton.setEnabled(true);
         UIMain.UI.deleteImageButton.setEnabled(true);
+        UIMain.UI.getBrokenMatchesButton.setEnabled(true);
         return true;
     }
     
@@ -68,6 +69,7 @@ public class UIUpdater {
         UIMain.UI.getImageButton.setEnabled(false);
         UIMain.UI.uploadImageButton.setEnabled(false);
         UIMain.UI.deleteImageButton.setEnabled(false);
+        UIMain.UI.getBrokenMatchesButton.setEnabled(false);
         return true;
     }
     
