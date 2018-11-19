@@ -297,6 +297,23 @@ public class UserManager {
 		}
 	}
 	
-	
-	// Getter
+	// Deactivates match of given user id.
+	public void deactivateMatch(String id) {
+		if (!LoginMan.isLoggedOn()) {
+			UIUpdater.error("Error: you are not logged in.");
+		} else {
+			int uid = LoginMan.getUID();
+			try {
+				MatchModel mModel = (MatchModel) modelMan.getModel(Table.MATCH);
+				int res = mModel.deactivateMatch(uid, Integer.parseInt(id));
+				if (res == 2) {
+					UIUpdater.setText("You have ghosted user: " + id + ", douche.");
+				} else {
+					UIUpdater.error("Looks like you've already been ghosted!");
+				}
+			} catch (SQLException e) {
+				UIUpdater.error("Failed ghosting user: " + e.getMessage());
+			}
+		}
+	}
 }

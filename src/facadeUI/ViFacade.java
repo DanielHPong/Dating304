@@ -116,4 +116,9 @@ public class ViFacade implements DaFacade {
 	public void getBrokenMatchesByType() {
 		UserMan.getBrokenMatchesByType();
 	}
+	
+	@Override
+	public void deactivateMatch(String id) {
+		UserMan.deactivateMatch(id);
+	}
 }

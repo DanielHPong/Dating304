@@ -24,4 +24,5 @@ public interface DaFacade {
 	public void addPaymentInfo(String cardType, String cardNo, String address);
 	public void deletePaymentInfo();
 	public void getBrokenMatchesByType();
+	public void deactivateMatch(String id);
 }
