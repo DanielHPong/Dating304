@@ -1,3 +1,9 @@
+# CPSC 304 2018 W1 Project
+
+Group 39
+
+David Kim, Daniel Le, Ellen Liu, Jason Yoo
+
 A fantastic dating app. Must use!
 
-PS: Make sure to setup VPN and replace database username/password with correct values to fetch data
+Just set up UBC VPN, download the jar file and click it to run! 
