@@ -36,7 +36,7 @@ public class PremiumCustomerModel extends GenericModel<PremiumCustomer> {
 		List<Object> values = new ArrayList<Object>();
 		types.add(Types.INTEGER);
 		values.add(customerId);
-		ResultSet rs = execQuerySQL("SELECT bName FROM Customer_Bname WHERE customerId = ?");
+		ResultSet rs = execQuerySQL("SELECT bName FROM Customer_Bname WHERE customerId = ?", types, values);
 		List<String> result = new ArrayList<String>();
 		while (rs.next()) {
 			result.add(rs.getString("bName"));

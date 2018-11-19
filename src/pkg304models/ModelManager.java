@@ -70,8 +70,16 @@ public class ModelManager {
 			return (GenericModel<Image>) new ImageModel(this.con);
 		case MATCH:
 			return (GenericModel<Match>) new MatchModel(this.con);
+		case PAYMENT_INFO:
+			return (GenericModel<PaymentInfo>) new PaymentInfoModel(this.con);
 		case PERSONALITY:
 			return (GenericModel<Personality>) new PersonalityModel(this.con);
+		case PREMIUM_CUSTOMER:
+			return (GenericModel<PremiumCustomer>) new PremiumCustomerModel(this.con);
+		case PREMIUM_PACKAGE:
+			return (GenericModel<PremiumPackage>) new PremiumPackageModel(this.con);
+		case PURCHASE:
+			return (GenericModel<Purchase>) new PurchaseModel(this.con);
 		default:
 			throw new SQLException("error: can't get a model for table with name - " + table);	
 		}

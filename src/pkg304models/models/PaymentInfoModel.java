@@ -42,10 +42,12 @@ public class PaymentInfoModel extends GenericModel<PaymentInfo> {
 		List<Object> values = new ArrayList<Object>();
 		types.add(Types.INTEGER);
 		values.add((Object) customerId);
-		ResultSet rs = execQuerySQL(
-			"SELECT * FROM Payment_Info JOIN Payment_Info_Card_Type ON Payment_Info.cardNo = Payment_Info_Card_Type.cardNo"
-			+ " AND customerId = ?"
-		);
+		
+		String cmd = "SELECT Payment_Info.infoId, Payment_Info.cardNo, cardType, address"
+				+ " FROM Payment_Info"
+				+ " JOIN Payment_Info_Card_Type ON Payment_Info.cardNo = Payment_Info_Card_type.cardNo"
+				+ " JOIN Premium_Customer ON Premium_Customer.customerId = ? AND Payment_Info.infoId = Premium_Customer.infoId";
+		ResultSet rs = execQuerySQL(cmd, types, values);
 		if (!rs.next()) {
 			throw new SQLException("error: no paymentInfo associated with customerId - " + customerId);
 		}
