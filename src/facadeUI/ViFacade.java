@@ -111,5 +111,9 @@ public class ViFacade implements DaFacade {
 		return UserMan.myPremiums();
 	}
 
-
+	@Override
+	// Displays broken matches by type for a specific user.
+	public void getBrokenMatchesByType() {
+		UserMan.getBrokenMatchesByType();
+	}
 }
